@@ -1,0 +1,60 @@
+<div th:fragment="content">
+
+    <div class="navbar navbar-inverse set-radius-zero" >
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+
+                    <img class="logo" src="assets/img/logo.png" />
+                </a>
+
+            </div>
+
+            <div class="right-div">
+                <a href="#" class="btn btn-danger pull-right">LOG ME OUT</a>
+            </div>
+        </div>
+    </div>
+    <!-- LOGO HEADER END-->
+    <section class="menu-section">
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-12">
+                    <div class="navbar-collapse collapse ">
+                        <ul id="menu-top" class="nav navbar-nav navbar-right">
+                        <li><a href="home">ACCEUIL</a></li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" id="ddlmenuItem" data-toggle="dropdown">CLIENT <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="ddlmenuItem">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="create">AJOUTER DES CLIENTS</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="list-active-clients">LES CLIENTS ACTIVES</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="list-inactive-clients">LES CLIENTS INACTIVES</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">INFORMATION CLIENT</a></li>             
+                                </ul>
+                            </li>                           
+                            
+                            <li>
+                                <a href="#" class="dropdown-toggle" id="ddlmenuItem" data-toggle="dropdown">CONSUTER <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="ddlmenuItem">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="list-clients">LIST DES CLIENTS</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">LISTE DES CATEGORIES</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">LISTE DES TYPES DES ABONNEMENTS</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="tab.html">TABS & PANELS</a></li>
+                             <li><a href="table.html">TABLES</a></li>
+                            <li><a href="blank.html">BLANK PAGE</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>

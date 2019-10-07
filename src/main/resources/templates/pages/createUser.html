@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/layout">
+
+<title layout:fragment="title">CREATE USER</title>
+
+<h4 class="header-line" layout:fragment="body-title">ENREGISTRER UN NOUVEAU CLIENT</h4>
+
+<div layout:fragment="body">
+
+	<div class="content-wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+					<div class="panel panel-info">
+						<div th:if="${isCreated}" class="panel-heading">Enregistré</div>
+						<div class="panel-body">
+							<form role="form" th:action="@{/create}" th:object="${client}" method="POST">
+								<div class="form-group">
+									<label>Enter le nom</label> <input class="form-control"
+										type="text" id="nom" name="nom" autofocus="autofocus"
+										th:field="${client.nom}" />
+									<p class="help-block"></p>
+								</div>
+								<div class="form-group">
+									<label>Enter le prenom</label> <input class="form-control"
+										type="text" id="prenom" name="prenom" />
+									<p class="help-block"></p>
+								</div>
+								<div class="form-group">
+									<label>Enter la date de début</label> <input
+										class="form-control" type="date" id="startDate"
+										name="startDate" />
+									<p class="help-block">jj/mm/aaaa</p>
+								</div>
+								<div class="form-group">
+									<label>Enter la date de naissance</label> <input
+										class="form-control" type="date" id="birthDay" name="birthDay" />
+									<p class="help-block">jj/mm/aaaa</p>
+								</div>
+								<div class="form-group">
+									<label>Select category</label> 
+									<select class="form-control" id="category" name="category">
+										<option th:each="category : ${categorys}" th:text="${category.name}" th:value="${category.idCategory}"></option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label>Select le type d'abonnement</label> 
+									<select class="form-control" id="subscription" name="subscription">
+										<option th:each="subscription : ${subscriptions}" th:text="${subscription.name}" th:value="${subscription.idSubscription}"></option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-info">Enregistrer
+								</button>
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</html>

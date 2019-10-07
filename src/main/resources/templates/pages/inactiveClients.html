@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/layout">
+
+<title layout:fragment="title">CLIENTS</title>
+
+<h4 class="header-line" layout:fragment="body-title">LISTE DES
+	CLIENTS</h4>
+
+<div layout:fragment="body">
+	<div class="row">
+		<div class="col-md-12">
+			<!-- Advanced Tables -->
+			<div class="panel panel-default">
+				<div class="panel-heading">Advanced Tables</div>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover"
+							id="dataTables-example">
+							<thead>
+								<tr>
+									<th>Nom</th>
+									<th>Prenom</th>
+									<th>Date de naissance</th>
+									<th>Engine version</th>
+									<th>CSS grade</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="client : ${clients}">
+									<td>[[${client.nom}]]</td>
+									<td>[[${client.prenom}]]</td>
+									<td>[[${client.birthDay}]]</td>
+									<td class="center">4</td>
+									<td class="center">
+										<button type="button"
+											th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient}"
+											class="btn btn-primary btn edituseraction"
+											data-toggle="modal" data-target="#ModifierClient">
+											Modifier client</button>
+
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+			<!--End Advanced Tables -->
+		</div>
+	</div>
+
+
+	<form role="form" th:action="@{/edit-inactive-clients}" th:object="${client}" method="POST">
+		<div class="modal fade" role="dialog" id="ModifierClient">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Modifier Client</h4>
+					</div>
+					<div class="modal-body">
+
+
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="panel panel-info">
+									<div class="panel-body">
+										<div class="form-group">
+											<label>Enter le nom</label> <input class="form-control"
+												type="text" id="nameinput" name="nom" autofocus="autofocus" />
+											<p class="help-block"></p>
+										</div>
+										<div class="form-group">
+											<label>Enter le prenom</label> <input class="form-control"
+												type="text" id="lastnameinput" name="prenom" />
+											<p class="help-block"></p>
+										</div>
+										<div class="form-group">
+											<label>Enter la date de début</label> <input
+												class="form-control" type="date" id="startDate"
+												name="startDate" />
+											<p class="help-block">jj/mm/aaaa</p>
+										</div>
+										<div class="form-group">
+											<label>Enter la date de naissance</label> <input
+												class="form-control" type="date" id="birthDay"
+												name="birthDay" />
+											<p class="help-block">jj/mm/aaaa</p>
+										</div>
+										<div class="form-group">
+											<label>Select category</label> <select class="form-control"
+												id="category" name="category">
+												<option th:each="category : ${categorys}"
+													th:text="${category.name}"
+													th:value="${category.idCategory}"></option>
+											</select>
+										</div>
+										<div class="form-group">
+											<label>Select le type d'abonnement</label> <select
+												class="form-control" id="subscription" name="subscription">
+												<option th:each="subscription : ${subscriptions}"
+													th:text="${subscription.name}"
+													th:value="${subscription.idSubscription}"></option>
+											</select>
+										</div>
+										<input type="text" id="idclient" name="idclient" th:field="${client.nom}"/>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+						<input type="submit" class="btn btn-primary" value="Modifier">
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</form>
+
+
+</div>
+
+
+
+
+</html>
