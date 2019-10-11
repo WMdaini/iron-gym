@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/layout">
+
+<title layout:fragment="title">CLIENTS</title>
+
+<h4 class="header-line" layout:fragment="body-title">LISTE DES
+	CLIENTS</h4>
+
+<div layout:fragment="body">
+	<div class="row">
+		<div class="col-md-12">
+			<!-- Advanced Tables -->
+			<div class="panel panel-default">
+				<div class="panel-heading">Tables</div>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover"
+							id="dataTables-example">
+							<thead>
+								<tr>
+									<th>Matricul</th>
+									<th>Nom</th>
+									<th>Prenom</th>
+<!-- 									<th>Date de naissance</th> -->
+<!-- 									<th>Date de début</th> -->
+<!-- 									<th>Catégorie</th> -->
+<!-- 									<th>Abonnement</th> -->
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+							<th:block th:each="client : ${clients}">
+								<tr th:attr="data-idrow=${client.idClient}" >
+									<td>[[${client.matricul}]]</td>
+									<td>[[${client.nom}]]</td>
+									<td>[[${client.prenom}]]</td>
+<!-- 									<td>[[${client.birthDay}]]</td> -->
+									<td class="col-md-2">
+									
+									
+										<button type="button"
+											th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient},data-birthday=${client.birthDay},data-startday=${client.startDate},data-categoryname=${client.category.name},data-subscriptionname=${client.subscription.name}"
+											class="btn btn-primary btn viewclientaction "
+											data-toggle="modal" data-target="#ViewClient" style="background-color: #e4c670;border-color: #e4c670;">
+											<i class="far fa-eye"></i>
+										</button>
+									
+										<button type="button"
+											th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient},data-birthday=${client.birthDay},data-startday=${client.startDate}"
+											class="btn btn-primary btn edituseraction "
+											data-toggle="modal" data-target="#ModifierClient" style="background-color: #757575;border-color: #757575;">
+											<i class="fas fa-user-edit"></i>
+										</button>
+										
+										<button type="button"
+											th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient}"
+											class="btn btn-primary btn deleteuseraction "
+											data-toggle="modal" data-target="#DeleteClient" style="background-color: #944747;border-color: #944747;">
+											<i class="fas fa-minus-circle"></i>
+										</button>
+										
+									
+									</td>
+								</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+			<!--End Advanced Tables -->
+		</div>
+	</div>
+
+
+	<form role="form" th:action="@{/edit-inactive-clients}" th:object="${newclient}" method="POST">
+		<div class="modal fade" role="dialog" id="ModifierClient">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Modifier Client</h4>
+					</div>
+					<div class="modal-body">
+
+
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="panel panel-info">
+									<div class="panel-body">
+										<div class="form-group">
+											<label>Enter le nom</label> <input class="form-control"
+												type="text" id="nameinput" name="nom" autofocus="autofocus" />
+											<p class="help-block"></p>
+										</div>
+										<div class="form-group">
+											<label>Enter le prenom</label> <input class="form-control"
+												type="text" id="lastnameinput" name="prenom" />
+											<p class="help-block"></p>
+										</div>
+										<div class="form-group">
+											<label>Enter la date de début</label> <input
+												class="form-control" type="date" id="startday"
+												name="startDate" />
+											<p class="help-block">jj/mm/aaaa</p>
+										</div>
+										<div class="form-group">
+											<label>Enter la date de naissance</label> <input
+												class="form-control" type="date" id="birthday"
+												name="birthDay" />
+											<p class="help-block">jj/mm/aaaa</p>
+										</div>
+										<div class="form-group">
+											<label>Select category</label> <select class="form-control"
+												id="category" name="category">
+												<option th:each="category : ${categorys}"
+													th:text="${category.name}"
+													th:value="${category.idCategory}"></option>
+											</select>
+										</div>
+										<div class="form-group">
+											<label>Select le type d'abonnement</label> <select
+												class="form-control" id="subscription" name="subscription">
+												<option th:each="subscription : ${subscriptions}"
+													th:text="${subscription.name}"
+													th:value="${subscription.idSubscription}"></option>
+											</select>
+										</div>
+										<input type="hidden" id="idclient" name="idclient"/>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+						<input type="submit" class="btn btn-primary" value="Modifier">
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</form>
+	
+	
+	
+	
+<!-- 	start view client -->
+	
+	<div class="modal fade" role="dialog" id="ViewClient">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">informations de <label id="clientname"></label> <label id="clientsecondname"></label> </h4>
+					</div>
+					<div class="modal-body">
+
+
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="panel panel-info">
+									<div class="panel-body">
+										<div class="form-group">
+											<label>Nom :</label><p class="help-block"><label id="nameinfo"></label></p>
+										</div>
+										<div class="form-group">
+											<label>Prenom :</label> <p class="help-block"><label id="secondnameinfo"></label></p>
+										</div>
+										<div class="form-group">
+											<label>Date de naissance :</label><p class="help-block"><label id="birthdayinfo"></label></p>
+										</div>
+										<div class="form-group">
+											<label>Date de début :</label><p class="help-block"><label id="startdateinfo"></label></p>
+										</div>
+										<div class="form-group">
+											<label>Categorie :</label> <p class="help-block"><label id="categoryinfo"></label></p>
+										</div>
+										<div class="form-group">
+											<label>Type d'abonnement :</label><p class="help-block"><label id="subscriptioninfo"></label></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Retour</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		
+<!-- 		end view client -->
+
+
+<!-- 			start client delete -->
+<form role="form" th:action="@{/delete-clients}" th:object="${newclient}" method="POST" class="delete_client">
+	<div class="modal fade" role="dialog" id="DeleteClient">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Voulez-vous supprimer <label id="clientnametodelete"></label> <label id="clientsecondnametodelete"></label> ? </h4>
+					</div>
+					<div class="modal-footer">
+					
+						<input type="hidden" name="idclienttodelete" id="idclienttodelete">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+						<input type="submit" class="btn btn-primary" value="Supprimer" style="background-color: #944747;border-color: #944747;">
+					</div>
+				</div>
+
+			</div>
+		</div>
+</form>
+<!-- 			end client delete -->
+
+</div>
+
+
+
+
+</html>

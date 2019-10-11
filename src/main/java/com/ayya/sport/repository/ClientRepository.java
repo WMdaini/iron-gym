@@ -11,4 +11,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
 	List<Client> findByIsActiveFalse();
 
+	Client findByIdclient(Long idClient);
+
 }

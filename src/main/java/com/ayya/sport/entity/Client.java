@@ -22,6 +22,9 @@ public class Client {
 	@Column(name = "id_client")
 	private Long idclient;
 
+	@Column(unique = true)
+	private String matricul;
+
 	private String nom;
 
 	private String prenom;
@@ -134,6 +137,14 @@ public class Client {
 
 	public void setIdCient(Long idClient) {
 		this.idclient = idClient;
+	}
+
+	public String getMatricul() {
+		return this.matricul;
+	}
+
+	public void setMatricul(String matricul) {
+		this.matricul = matricul;
 	}
 
 }

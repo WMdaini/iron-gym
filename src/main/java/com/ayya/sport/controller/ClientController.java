@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ayya.sport.entity.Client;
 import com.ayya.sport.repository.CategoryRepository;
@@ -58,8 +59,11 @@ public class ClientController {
 
 	@RequestMapping(value = "/list-active-clients", method = RequestMethod.GET)
 	public String getActiveClients(Model model) {
-		model.addAttribute("clients", this.clientRepository.findByIsActiveTrue());
-		return "/pages/activeClients";
+		model.addAttribute("client", new Client());
+		model.addAttribute("clients", this.clientRepository.findByIsActiveFalse());
+		model.addAttribute("categorys", this.categoryRepository.findAll());
+		model.addAttribute("subscriptions", this.subscriptionRepository.findAll());
+		return "/pages/clientsList";
 	}
 
 	@RequestMapping(value = "/list-inactive-clients", method = RequestMethod.GET)
@@ -68,7 +72,16 @@ public class ClientController {
 		model.addAttribute("clients", this.clientRepository.findByIsActiveFalse());
 		model.addAttribute("categorys", this.categoryRepository.findAll());
 		model.addAttribute("subscriptions", this.subscriptionRepository.findAll());
-		return "/pages/inactiveClients";
+		return "/pages/clientsList";
+	}
+
+	@RequestMapping(value = "/list-clients", method = RequestMethod.GET)
+	public String getAllClients(Model model) {
+		model.addAttribute("client", new Client());
+		model.addAttribute("clients", this.clientRepository.findAll());
+		model.addAttribute("categorys", this.categoryRepository.findAll());
+		model.addAttribute("subscriptions", this.subscriptionRepository.findAll());
+		return "/pages/clientsList";
 	}
 
 	@RequestMapping(value = "/edit-inactive-clients", method = RequestMethod.POST)
@@ -78,5 +91,14 @@ public class ClientController {
 		System.out.println(allParams.get("idclient"));
 
 		return getInactiveClients(model);
+	}
+
+	@RequestMapping(value = "/delete-clients", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody Boolean deleteClient(@RequestParam Map<String, String> allParams) {
+
+		System.out.println(allParams.get("idclienttodelete"));
+		this.clientRepository.delete(this.clientRepository.findByIdclient(Long.parseLong(allParams.get("idclienttodelete"))));
+
+		return true;
 	}
 }

@@ -18,20 +18,131 @@
 		PathName = PathName.replace("/", "");
 		
 		$(".menu-section [href='"+PathName+"']").addClass("menu-top-active");
-
 		
+		
+		
+			$("body").on("click",".deleteuseraction",function() {
+			
+			name = $(this).data("name");
+			lastname = $(this).data("lastname");
+			idClient= $(this).data("idclient");
+			
+			
+			if(name == "undefined"){
+				$("#clientnametodelete").text("");
+			}else{
+				$("#clientnametodelete").text(name);
+			}
+			if(lastname == "undefined"){
+				$("#clientsecondnametodelete").text("");
+				
+			}else{
+				$("#clientsecondnametodelete").text(lastname);
+			}
+
+			$("#idclienttodelete").val(idClient);
+
+			
+		});
+		
+		$("body").on("click",".viewclientaction",function() {
+			
+			name = $(this).data("name");
+			lastname = $(this).data("lastname");
+			birthday= $(this).data("birthday");
+			startday = $(this).data("startday");
+			category = $(this).data("categoryname");
+			subscription = $(this).data("subscriptionname");
+			
+			var now = new Date(birthday);
+			var day = ("0" + now.getDate()).slice(-2);
+			var month = ("0" + (now.getMonth() + 1)).slice(-2);
+			birthday = now.getFullYear()+"-"+(month)+"-"+(day) ;
+			
+			var now = new Date(startday);
+			var day = ("0" + now.getDate()).slice(-2);
+			var month = ("0" + (now.getMonth() + 1)).slice(-2);
+			startday = now.getFullYear()+"-"+(month)+"-"+(day) ;
+			
+			if(name == "undefined"){
+				$("#clientname").text("");
+				$("#nameinfo").text("");
+			}else{
+				$("#clientname").text(name);
+				$("#nameinfo").text(name);
+			}
+			if(lastname == "undefined"){
+				$("#clientsecondname").text("");
+				$("#secondnameinfo").text("");
+				
+			}else{
+				$("#clientsecondname").text(lastname);
+				$("#secondnameinfo").text(lastname);
+			}
+
+			$("#birthdayinfo").text(birthday);
+			$("#startdateinfo").text(startday);
+			$("#categoryinfo").text(category);
+			$("#subscriptioninfo").text(subscription);
+			
+		});
 		
 		$("body").on("click",".edituseraction",function() {
 			
 			name = $(this).data("name");
 			lastname = $(this).data("lastname");
 			idClient= $(this).data("idclient");
-
-			$("#nameinput").val(name);
-			$("#lastnameinput").val(lastname);
+			birthday= $(this).data("birthday");
+			startday = $(this).data("startday");
+			
+			var now = new Date(birthday);
+			var day = ("0" + now.getDate()).slice(-2);
+			var month = ("0" + (now.getMonth() + 1)).slice(-2);
+			birthday = now.getFullYear()+"-"+(month)+"-"+(day) ;
+			
+			var now = new Date(startday);
+			var day = ("0" + now.getDate()).slice(-2);
+			var month = ("0" + (now.getMonth() + 1)).slice(-2);
+			startday = now.getFullYear()+"-"+(month)+"-"+(day) ;
+			
+			if(name == "undefined"){
+				$("#nameinput").val("");
+			}else{
+				$("#nameinput").val(name);
+			}
+			
+			if(lastname == "undefined"){
+				$("#lastnameinput").val("");
+			}else{
+				$("#lastnameinput").val(lastname);
+			}
+			
 			$("#idclient").val(idClient);
+			$("#birthday").val(birthday);
+			$("#startday").val(startday);
 
-		})
+		});
+		
+		$("body").on("click",".delete_client [value='Supprimer']",function(e){
+			
+			e.preventDefault();
+			data = $(".delete_client").serialize();
+			
+			idClient = $("#idclienttodelete").val();
+			
+			$.post($(".delete_client").attr("action"),data,function(result){
+
+				var myTable = $('#dataTables-example').DataTable();
+				
+				if(result){
+					console.log(result)
+					myTable.row( $("[data-idrow='"+idClient+"']")).remove().draw();
+					$("#DeleteClient").modal('toggle');
+				}
+				
+			});
+			
+		});
 		
 	})
 	
