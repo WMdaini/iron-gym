@@ -8,10 +8,11 @@
 <h4 class="header-line" layout:fragment="body-title">LISTE DES
 	CLIENTS</h4>
 <div layout:fragment="filters">
+<form role="form" th:action="@{/refresh_clients}" method="POST" class="refresh_clients">
 	<div class="col-md-offset-1 col-md-11">
 		<p class="header-line">FILTERS</p>
 		<div class="form-group">
-			<input type="radio" checked="checked" name="typeClients" value="tous" id="radioTypeClient1" class="radioTypeClient"> <label>Tous</label>
+			<input type="radio" checked="checked" name="typeClients" value="all" id="radioTypeClient1" class="radioTypeClient"> <label>Tous</label>
 		</div>
 		<div class="form-group">
 			<input type="radio" name="typeClients" value="active" id="radioTypeClient2" class="radioTypeClient"> <label>Les clients active</label>
@@ -21,6 +22,7 @@
 		</div>
 		<hr>
 	</div>
+</form>
 </div>
 <div layout:fragment="body">
 	<div class="row">

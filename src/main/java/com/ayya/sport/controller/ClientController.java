@@ -1,8 +1,11 @@
 package com.ayya.sport.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -100,5 +103,25 @@ public class ClientController {
 		this.clientRepository.delete(this.clientRepository.findByIdclient(Long.parseLong(allParams.get("idclienttodelete"))));
 
 		return true;
+	}
+
+	@RequestMapping(value = "/refresh_clients", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Client> refreshClients(@RequestParam Map<String, String> allParams) {
+		String type = allParams.get("typeClients");
+		List<Client> clients = new ArrayList<Client>();
+
+		if (type != null) {
+			if (type.equals("all")) {
+				clients = this.clientRepository.findAll();
+			} else if (type.equals("active")) {
+				clients = this.clientRepository.findByIsActiveTrue();
+			} else {
+				clients = this.clientRepository.findByIsActiveFalse();
+			}
+		}
+
+		System.out.println(clients);
+
+		return clients;
 	}
 }

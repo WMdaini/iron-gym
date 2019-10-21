@@ -1,12 +1,20 @@
 package com.ayya.sport.entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Subscription {
 
 	@Id
@@ -21,6 +29,11 @@ public class Subscription {
 	public Subscription() {
 		super();
 	}
+
+	@OneToMany(mappedBy = "subscription", fetch = FetchType.EAGER)
+	@Column(nullable = true)
+	// @JsonManagedReference
+	private Set<Client> clients;
 
 	public Subscription(String name, Integer period) {
 		super();

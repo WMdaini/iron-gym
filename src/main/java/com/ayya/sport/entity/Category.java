@@ -1,15 +1,20 @@
 package com.ayya.sport.entity;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,18 +25,13 @@ public class Category {
 
 	private String description;
 
-	@OneToMany(mappedBy = "category")
-	private List<Client> clients;
+	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+	@Column(nullable = true)
+	// @JsonManagedReference
+	private Set<Client> clients;
 
 	public Category() {
 		super();
-	}
-
-	public Category(String name, String description, List<Client> clients) {
-		super();
-		this.name = name;
-		this.description = description;
-		this.clients = clients;
 	}
 
 	public Long getIdCategory() {
@@ -56,14 +56,6 @@ public class Category {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public List<Client> getClients() {
-		return this.clients;
-	}
-
-	public void setClients(List<Client> clients) {
-		this.clients = clients;
 	}
 
 }
