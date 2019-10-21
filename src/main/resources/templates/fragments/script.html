@@ -150,9 +150,14 @@
 			data = $(".refresh_clients").serialize();
 			$.post($(".refresh_clients").attr("action"),data,function(result){
 				console.log(result);
-				var myTable = $('#dataTables-example').DataTable();
- 				if(result){
-					myTable.row( $("[data-idrow='"+idClient+"']")).remove().draw();
+
+				 for(var i = 0; i < result.length; i++)
+				   {
+					 console.log(result[i].category.description);
+				   }
+// 				var myTable = $('#dataTables-example').DataTable();
+//  				if(result){
+// 					myTable.row( $("[data-idrow='"+idClient+"']")).remove().draw();
 // 				}
 				
 			});
