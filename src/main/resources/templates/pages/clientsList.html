@@ -7,7 +7,7 @@
 
 <h4 class="header-line" layout:fragment="body-title">LISTE DES
 	CLIENTS</h4>
-<div layout:fragment="filters">
+<div layout:fragment="filters" id="pageClientList">
 <form role="form" th:action="@{/refresh_clients}" method="POST" class="refresh_clients">
 	<div class="col-md-offset-1 col-md-11">
 		<p class="header-line">FILTERS</p>
@@ -15,10 +15,10 @@
 			<input type="radio" checked="checked" name="typeClients" value="all" id="radioTypeClient1" class="radioTypeClient"> <label>Tous</label>
 		</div>
 		<div class="form-group">
-			<input type="radio" name="typeClients" value="active" id="radioTypeClient2" class="radioTypeClient"> <label>Les clients active</label>
+			<input type="radio" name="typeClients" value="active" id="radioTypeClient2" class="radioTypeClient"> <label>Les clients actives</label>
 		</div>
 		<div class="form-group">
-			<input type="radio" name="typeClients" value="inactive" id="radioTypeClient3" class="radioTypeClient"> <label>Les clients inactive</label>
+			<input type="radio" name="typeClients" value="inactive" id="radioTypeClient3" class="radioTypeClient"> <label>Les clients inactives</label>
 		</div>
 		<hr>
 	</div>
@@ -46,7 +46,7 @@
 									<th>Action</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="list_client_body">
 								<th:block th:each="client : ${clients}">
 									<tr th:attr="data-idrow=${client.idClient}">
 										<td>[[${client.matricul}]]</td>
@@ -96,7 +96,7 @@
 
 
 	<form role="form" th:action="@{/edit-inactive-clients}"
-		th:object="${newclient}" method="POST">
+		th:object="${newclient}" method="POST" class="edit_clients">
 		<div class="modal fade" role="dialog" id="ModifierClient">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -133,7 +133,7 @@
 										<div class="form-group">
 											<label>Enter la date de naissance</label> <input
 												class="form-control" type="date" id="birthday"
-												name="birthDay" />
+												name="birthday" />
 											<p class="help-block">jj/mm/aaaa</p>
 										</div>
 										<div class="form-group">
@@ -161,7 +161,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-						<input type="submit" class="btn btn-primary" value="Modifier">
+						<input type="submit" class="btn btn-primary" id="editButton" value="Modifier">
 					</div>
 				</div>
 
@@ -268,7 +268,7 @@
 
 						<input type="hidden" name="idclienttodelete" id="idclienttodelete">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-						<input type="submit" class="btn btn-primary" value="Supprimer"
+						<input type="submit" class="btn btn-primary" value="iSupprimer"
 							style="background-color: #944747; border-color: #944747;">
 					</div>
 				</div>

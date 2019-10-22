@@ -1,7 +1,11 @@
 package com.ayya.sport.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ayya.sport.entity.Category;
 import com.ayya.sport.entity.Client;
+import com.ayya.sport.entity.Subscription;
 import com.ayya.sport.repository.CategoryRepository;
 import com.ayya.sport.repository.ClientRepository;
 import com.ayya.sport.repository.SubscriptionRepository;
@@ -84,13 +90,32 @@ public class ClientController {
 		model.addAttribute("clients", this.clientRepository.findAll());
 		model.addAttribute("categorys", this.categoryRepository.findAll());
 		model.addAttribute("subscriptions", this.subscriptionRepository.findAll());
+		model.addAttribute("pageId", "clientsList");
+		model.addAttribute("showFilter", "true");
+
 		return "/pages/clientsList";
 	}
 
 	@RequestMapping(value = "/edit-inactive-clients", method = RequestMethod.POST)
-	public String editClients(@RequestParam Map<String, String> allParams, Model model) {
+	public String editClients(@RequestParam Map<String, String> allParams, Model model) throws ParseException {
 		// this.clientRepository.saveAndFlush(newClient);
-
+		Client client = this.clientRepository.findByIdclient(Long.parseLong(allParams.get("idclient")));
+		if (client != null) {
+			client.setNom(allParams.get("nom"));
+			client.setPrenom(allParams.get("prenom"));
+			if (allParams.get("birthday") != null && !allParams.get("birthday").equals("")) {
+				Date birthday = new SimpleDateFormat("yyyymmdd", Locale.ENGLISH).parse(allParams.get("startDate"));
+				client.setBirthDay(birthday);
+			}
+			if (allParams.get("startDate") != null && !allParams.get("startDate").equals("")) {
+				Date startDate = new SimpleDateFormat("yyyymmdd", Locale.ENGLISH).parse(allParams.get("startDate"));
+				client.setStartDate(startDate);
+			}
+			Category caltegory = this.categoryRepository.findByIdCategory(Long.parseLong(allParams.get("category")));
+			client.setCategory(caltegory);
+			Subscription subscription = this.subscriptionRepository.findByIdSubscription(Long.parseLong(allParams.get("subscription")));
+			client.setSubscription(subscription);
+		}
 		System.out.println(allParams.get("idclient"));
 
 		return getInactiveClients(model);

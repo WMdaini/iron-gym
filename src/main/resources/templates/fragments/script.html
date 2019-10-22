@@ -151,14 +151,61 @@
 			$.post($(".refresh_clients").attr("action"),data,function(result){
 				console.log(result);
 				var myTable = $('#dataTables-example').DataTable();
-//  				if(result){
-// 					myTable.row( $("[data-idrow='"+idClient+"']")).remove().draw();
-// 				}
+				htmlCode = "";	
+				$('#dataTables-example').DataTable().clear();
+				 for(var i = 0; i < result.length; i++)
+				   {		
+					 
+					buttons="<button type='button'"+
+								"data-name="+result[i].nom+" data-lastname="+result[i].prenom+" data-idclient="+result[i].idClient+" data-birthday="+result[i].birthDay+" data-startday="+result[i].startDate +
+								" class='btn btn-primary btn viewclientaction' data-toggle='modal' data-target='#ViewClient'"+
+								" style='background-color: #e4c670; border-color: #e4c670;'>"+
+								" <i class='far fa-eye'></i>"+
+							"</button>"+
+							"<button type='button'"+
+								"data-name="+result[i].nom+" data-lastname="+result[i].prenom+" data-idclient="+result[i].idClient+" data-birthday="+result[i].birthDay+" data-startday="+result[i].startDate+
+								" class='btn btn-primary btn edituseraction '"+
+								" data-toggle='modal' data-target='#ModifierClient'"+
+								" style='background-color: #757575; border-color: #757575;'>"+
+								" <i class='fas fa-user-edit'></i>"+
+							"</button>"+
+							"<button type='button'"+
+								"data-name="+result[i].nom+" data-lastname="+result[i].prenom+" data-idclient="+result[i].idClient+
+								" class='btn btn-primary btn deleteuseraction '"+
+								" data-toggle='modal' data-target='#DeleteClient'"+
+								" style='background-color: #944747; border-color: #944747;'>"+
+								" <i class='fas fa-minus-circle'></i>"+
+							"</button>";
+							 
+					 
+					 
+					 
+					 
+					 
+						 myTable.row.add( [
+						             result[i].matricul,
+						             result[i].nom,
+						             result[i].prenom,
+						             buttons,
+						         ] ).draw( false );
+						 
+					 console.log(result[i].category.description);
+				   }
+				 
 				
+				 
 			});
 			
 		});
-		
+		$("body").on("click","#editButton",function(e) {
+			e.preventDefault();
+			data = $(".edit_clients").serialize();
+			console.log(data);
+			$.post($(".edit_clients").attr("action"),data,function(result){
+				
+			});
+			$("#ModifierClient").modal('toggle');
+		});
 	})
 	
 </script>
