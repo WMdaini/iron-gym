@@ -151,8 +151,8 @@
 			$.post($(".refresh_clients").attr("action"),data,function(result){
 				console.log(result);
 				var myTable = $('#dataTables-example').DataTable();
- 				if(result){
-					myTable.row( $("[data-idrow='"+idClient+"']")).remove().draw();
+//  				if(result){
+// 					myTable.row( $("[data-idrow='"+idClient+"']")).remove().draw();
 // 				}
 				
 			});
