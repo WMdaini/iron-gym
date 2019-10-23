@@ -94,7 +94,8 @@
 			idClient= $(this).data("idclient");
 			birthday= $(this).data("birthday");
 			startday = $(this).data("startday");
-			
+			category = $(this).data("categoryid");
+			subscription = $(this).data("subscriptionid");
 			var now = new Date(birthday);
 			var day = ("0" + now.getDate()).slice(-2);
 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -116,7 +117,8 @@
 			}else{
 				$("#lastnameinput").val(lastname);
 			}
-			
+			$("#subscription").val(subscription);
+			$("#category").val(category);
 			$("#idclient").val(idClient);
 			$("#birthday").val(birthday);
 			$("#startday").val(startday);
@@ -154,8 +156,7 @@
 				htmlCode = "";	
 				$('#dataTables-example').DataTable().clear();
 				 for(var i = 0; i < result.length; i++)
-				   {		
-					 
+				   {
 					buttons="<button type='button'"+
 								"data-name="+result[i].nom+" data-lastname="+result[i].prenom+" data-idclient="+result[i].idClient+" data-birthday="+result[i].birthDay+" data-startday="+result[i].startDate +
 								" class='btn btn-primary btn viewclientaction' data-toggle='modal' data-target='#ViewClient'"+
@@ -164,6 +165,7 @@
 							"</button>"+
 							"<button type='button'"+
 								"data-name="+result[i].nom+" data-lastname="+result[i].prenom+" data-idclient="+result[i].idClient+" data-birthday="+result[i].birthDay+" data-startday="+result[i].startDate+
+								" data-categoryid="+result[i].category.idCategory+" data-subscriptionid="+result[i].subscription.idSubscription+
 								" class='btn btn-primary btn edituseraction '"+
 								" data-toggle='modal' data-target='#ModifierClient'"+
 								" style='background-color: #757575; border-color: #757575;'>"+
@@ -202,8 +204,9 @@
 			data = $(".edit_clients").serialize();
 			console.log(data);
 			$.post($(".edit_clients").attr("action"),data,function(result){
-				
+				console.log(result);
 			});
+			
 			$("#ModifierClient").modal('toggle');
 		});
 	})

@@ -65,7 +65,7 @@
 											</button>
 
 											<button type="button"
-												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient},data-birthday=${client.birthDay},data-startday=${client.startDate}"
+												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient},data-birthday=${client.birthDay},data-startday=${client.startDate},data-categoryid=${client.category.idCategory},data-subscriptionid=${client.subscription.idSubscription}"
 												class="btn btn-primary btn edituseraction "
 												data-toggle="modal" data-target="#ModifierClient"
 												style="background-color: #757575; border-color: #757575;">
@@ -95,7 +95,7 @@
 	</div>
 
 
-	<form role="form" th:action="@{/edit-inactive-clients}"
+	<form role="form" th:action="@{/edit-clients}"
 		th:object="${newclient}" method="POST" class="edit_clients">
 		<div class="modal fade" role="dialog" id="ModifierClient">
 			<div class="modal-dialog" role="document">
@@ -139,6 +139,7 @@
 										<div class="form-group">
 											<label>Select category</label> <select class="form-control"
 												id="category" name="category">
+												<option>séléctionner une catégorie</option>
 												<option th:each="category : ${categorys}"
 													th:text="${category.name}"
 													th:value="${category.idCategory}"></option>
@@ -147,6 +148,7 @@
 										<div class="form-group">
 											<label>Select le type d'abonnement</label> <select
 												class="form-control" id="subscription" name="subscription">
+												<option>séléctionner un abonnement</option>
 												<option th:each="subscription : ${subscriptions}"
 													th:text="${subscription.name}"
 													th:value="${subscription.idSubscription}"></option>

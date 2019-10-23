@@ -1,5 +1,6 @@
 package com.ayya.sport.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,12 +11,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "category")
-public class Category {
+public class Category implements Serializable {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_category")
@@ -26,8 +28,6 @@ public class Category {
 	private String description;
 
 	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
-	@Column(nullable = true)
-	// @JsonManagedReference
 	private Set<Client> clients;
 
 	public Category() {
