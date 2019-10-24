@@ -201,9 +201,12 @@
 		});
 		$("body").on("click","#editButton",function(e) {
 			e.preventDefault();
+			var myTable = $('#dataTables-example').DataTable();
+			idclient = $("#idclient").val();
 			data = $(".edit_clients").serialize();
 			console.log(data);
 			$.post($(".edit_clients").attr("action"),data,function(result){
+				myTable.row( $("[data-idrow='"+idClient+"']")).remove().draw();
 				console.log(result);
 			});
 			
