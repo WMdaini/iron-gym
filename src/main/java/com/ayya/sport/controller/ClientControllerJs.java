@@ -61,8 +61,8 @@ public class ClientControllerJs {
 	}
 
 	@RequestMapping(value = "/edit-clients", method = RequestMethod.POST)
-	public String editClients(@RequestParam Map<String, String> allParams, Model model) throws ParseException {
-		String message = null;
+	public Client editClients(@RequestParam Map<String, String> allParams, Model model) throws ParseException {
+		String message = "Modifié";
 		Client client = this.clientRepository.findByIdclient(Long.parseLong(allParams.get("idclient")));
 		if (client != null) {
 			client.setNom(allParams.get("nom"));
@@ -85,7 +85,7 @@ public class ClientControllerJs {
 		}
 		System.out.println(allParams.get("idclient"));
 
-		return message;
+		return client;
 	}
 
 }
