@@ -203,6 +203,7 @@
 			e.preventDefault();
 			var myTable = $('#dataTables-example').DataTable();
 			idclient = $("#idclient").val();
+			
 			data = $(".edit_clients").serialize();
 			console.log(data);
 			$.post($(".edit_clients").attr("action"),data,function(result){
