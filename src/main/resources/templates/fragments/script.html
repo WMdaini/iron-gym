@@ -204,10 +204,6 @@
 			var myTable = $('#dataTables-example').DataTable();
 			idclient = $("#idclient").val();
 			data = $(".edit_clients").serialize();
-			for (var key in data) {
-				matricule = encodeURIComponent(data[key]);
-				nom = encodeURIComponent(data[key]);
-			}
 			console.log(data);
 			$.post($(".edit_clients").attr("action"),data,function(result){
 				
