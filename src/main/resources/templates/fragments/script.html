@@ -201,10 +201,60 @@
 		});
 		$("body").on("click","#editButton",function(e) {
 			e.preventDefault();
+			var myTable = $('#dataTables-example').DataTable();
+			idclient = $("#idclient").val();
 			data = $(".edit_clients").serialize();
 			console.log(data);
 			$.post($(".edit_clients").attr("action"),data,function(result){
-				console.log(result);
+				
+				
+				
+				buttons="<button type='button'"+
+						"data-name="+result.nom+" data-lastname="+result.prenom+" data-idclient="+result.idClient+" data-birthday="+result.birthDay+" data-startday="+result.startDate +
+						" class='btn btn-primary btn viewclientaction' data-toggle='modal' data-target='#ViewClient'"+
+						" style='background-color: #e4c670; border-color: #e4c670;'>"+
+						" <i class='far fa-eye'></i>"+
+					"</button>"+
+					"<button type='button'"+
+						"data-name="+result.nom+" data-lastname="+result.prenom+" data-idclient="+result.idClient+" data-birthday="+result.birthDay+" data-startday="+result.startDate+
+						" data-categoryid="+result.category.idCategory+" data-subscriptionid="+result.subscription.idSubscription+
+						" class='btn btn-primary btn edituseraction '"+
+						" data-toggle='modal' data-target='#ModifierClient'"+
+						" style='background-color: #757575; border-color: #757575;'>"+
+						" <i class='fas fa-user-edit'></i>"+
+					"</button>"+
+					"<button type='button'"+
+						"data-name="+result.nom+" data-lastname="+result.prenom+" data-idclient="+result.idClient+
+						" class='btn btn-primary btn deleteuseraction '"+
+						" data-toggle='modal' data-target='#DeleteClient'"+
+						" style='background-color: #944747; border-color: #944747;'>"+
+						" <i class='fas fa-minus-circle'></i>"+
+					"</button>";
+				
+				
+				
+				
+				
+				
+					index = myTable.row( $("[data-idrow='"+idClient+"']")).index();
+					console.log(result);
+					myTable.row.add( [
+						             result.matricul,
+						             result.nom,
+						             result.prenom,
+						             buttons,
+						         ] ).draw();
+					
+			        rowCount = myTable.data().length-1,
+			        insertedRow = myTable.row(rowCount).data(),
+					
+					myTable.row(index).data(insertedRow);
+					myTable.row(rowCount).remove().draw();
+					
+
+			    myTable.draw(false);
+				
+
 			});
 			
 			$("#ModifierClient").modal('toggle');
