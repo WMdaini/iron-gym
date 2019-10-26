@@ -43,9 +43,9 @@ public class ClientControllerJs {
 			if (type.equals("all")) {
 				clients = this.clientRepository.findAll();
 			} else if (type.equals("active")) {
-				clients = this.clientRepository.findByIsActiveTrue();
+//				clients = this.clientRepository.findByIsActiveTrue();
 			} else {
-				clients = this.clientRepository.findByIsActiveFalse();
+//				clients = this.clientRepository.findByIsActiveFalse();
 			}
 		}
 
@@ -68,17 +68,14 @@ public class ClientControllerJs {
 			client.setNom(allParams.get("nom"));
 			client.setPrenom(allParams.get("prenom"));
 			if (allParams.get("birthday") != null && !allParams.get("birthday").equals("")) {
-				Date birthday = new SimpleDateFormat("yyyymmdd", Locale.ENGLISH).parse(allParams.get("startDate"));
+				Date birthday = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH).parse(allParams.get("startDate"));
 				client.setBirthDay(birthday);
 			}
-			if (allParams.get("startDate") != null && !allParams.get("startDate").equals("")) {
-				Date startDate = new SimpleDateFormat("yyyymmdd", Locale.ENGLISH).parse(allParams.get("startDate"));
-				client.setStartDate(startDate);
-			}
+
 			Category caltegory = this.categoryRepository.findByIdCategory(Long.parseLong(allParams.get("category")));
 			client.setCategory(caltegory);
 			Subscription subscription = this.subscriptionRepository.findByIdSubscription(Long.parseLong(allParams.get("subscription")));
-			client.setSubscription(subscription);
+//			client.setSubscription(subscription);
 		}
 		else {
 			message = "Utilisateur introuvable (Problème systéme , contacter l'administrateur) !";

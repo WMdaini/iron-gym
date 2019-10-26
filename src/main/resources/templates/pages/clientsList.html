@@ -57,7 +57,7 @@
 
 
 											<button type="button"
-												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient},data-birthday=${client.birthDay},data-startday=${client.startDate},data-categoryname=${client.category.name},data-subscriptionname=${client.subscription.name}"
+												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient},data-birthday=${client.birthDay},data-startday=${client.subscription.startDate},data-categoryname=${client.category.name},data-subscriptionname=${client.subscription.name}"
 												class="btn btn-primary btn viewclientaction "
 												data-toggle="modal" data-target="#ViewClient"
 												style="background-color: #e4c670; border-color: #e4c670;">
@@ -65,7 +65,7 @@
 											</button>
 
 											<button type="button"
-												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient},data-birthday=${client.birthDay},data-startday=${client.startDate},data-categoryid=${client.category.idCategory},data-subscriptionid=${client.subscription.idSubscription}"
+												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient},data-birthday=${client.birthDay},data-startday=${client.subscription.startDate},data-categoryid=${client.category.idCategory},data-subscriptionid=${client.subscription.idSubscription}"
 												class="btn btn-primary btn edituseraction "
 												data-toggle="modal" data-target="#ModifierClient"
 												style="background-color: #757575; border-color: #757575;">

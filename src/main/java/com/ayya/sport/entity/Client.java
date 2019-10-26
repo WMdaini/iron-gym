@@ -2,15 +2,19 @@ package com.ayya.sport.entity;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -35,19 +39,13 @@ public class Client implements Serializable {
 
 	private String prenom;
 
-	@DateTimeFormat(iso = ISO.DATE)
-	private Date startDate;
-
 	private File photo;
 
 	@DateTimeFormat(iso = ISO.DATE)
 	private Date birthDay;
 
-	private boolean isActive;
-
-	@ManyToOne
-	@JoinColumn(name = "idSubscription")
-	private Subscription subscription;
+	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+	private List<Subscription> subscriptions = new ArrayList<Subscription>();
 
 	@ManyToOne()
 	@JoinColumn(name = "idCategory")
@@ -57,15 +55,12 @@ public class Client implements Serializable {
 		super();
 	}
 
-	public Client(String nom, String prenom, Date startDate, File photo, Date birthDay, boolean isActive, Subscription subscription, Category category) {
+	public Client(String nom, String prenom, File photo, Date birthDay, Category category) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
-		this.startDate = startDate;
 		this.photo = photo;
 		this.birthDay = birthDay;
-		this.isActive = isActive;
-		this.subscription = subscription;
 		this.category = category;
 	}
 
@@ -93,28 +88,12 @@ public class Client implements Serializable {
 		this.prenom = prenom;
 	}
 
-	public Date getStartDate() {
-		return this.startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
 	public File getPhoto() {
 		return this.photo;
 	}
 
 	public void setPhoto(File photo) {
 		this.photo = photo;
-	}
-
-	public Subscription getSubscription() {
-		return this.subscription;
-	}
-
-	public void setSubscription(Subscription subscription) {
-		this.subscription = subscription;
 	}
 
 	public Category getCategory() {
@@ -133,13 +112,6 @@ public class Client implements Serializable {
 		this.birthDay = birthDay;
 	}
 
-	public boolean isActive() {
-		return this.isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
 
 	public void setIdCient(Long idClient) {
 		this.idclient = idClient;
@@ -152,5 +124,22 @@ public class Client implements Serializable {
 	public void setMatricul(String matricul) {
 		this.matricul = matricul;
 	}
+
+	public Long getIdclient() {
+		return idclient;
+	}
+
+	public void setIdclient(Long idclient) {
+		this.idclient = idclient;
+	}
+
+	public List<Subscription> getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(List<Subscription> subscriptions) {
+		this.subscriptions = subscriptions;
+	}
+	
 
 }

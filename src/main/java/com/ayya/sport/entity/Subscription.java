@@ -1,6 +1,7 @@
 package com.ayya.sport.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,7 +10,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.ManyToAny;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 public class Subscription implements Serializable {
@@ -24,38 +31,56 @@ public class Subscription implements Serializable {
 	@Column(name = "id_subscription")
 	private Long idSubscription;
 
-	private String name;
+	@DateTimeFormat(iso = ISO.DATE)
+	private Date startDate;
+	
+	@DateTimeFormat(iso = ISO.DATE)
+	private Date endDate;
 
-	private Integer period;
-
+	private boolean isActive;
+	
+	@ManyToOne
+	@JoinColumn(name = "idclient")
+	private Client client;
+	
+	@ManyToOne()
+	@JoinColumn(name = "subscriptionTypeId")
+	private SubscriptionType subscriptionType;
+	
 	public Subscription() {
 		super();
 	}
 
-	@OneToMany(mappedBy = "subscription", fetch = FetchType.EAGER)
-	private List<Client> clients;
-
-	public Subscription(String name, Integer period) {
-		super();
-		this.name = name;
-		this.period = period;
+	
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public String getName() {
-		return this.name;
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+
+	public Client getClient() {
+		return client;
 	}
 
-	public Integer getPeriod() {
-		return this.period;
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
-	public void setPeriod(Integer period) {
-		this.period = period;
+
+	public SubscriptionType getSubscriptionType() {
+		return subscriptionType;
 	}
+
+
+	public void setSubscriptionType(SubscriptionType subscriptionType) {
+		this.subscriptionType = subscriptionType;
+	}
+
 
 	public Long getIdSubscription() {
 		return this.idSubscription;
@@ -63,6 +88,22 @@ public class Subscription implements Serializable {
 
 	public void setIdSubscription(Long idSubscription) {
 		this.idSubscription = idSubscription;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	
+	public boolean isActive() {
+		return this.isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }

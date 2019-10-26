@@ -48,7 +48,7 @@
 								<div class="form-group">
 									<label>Select le type d'abonnement</label> 
 									<select class="form-control" id="subscription" name="subscription">
-										<option th:each="subscription : ${subscriptions}" th:text="${subscription.name}" th:value="${subscription.idSubscription}"></option>
+										<option th:each="subscription : ${subscriptions}" th:text="${subscription.name}" th:value="${subscription.subscriptionTypeId}"></option>
 									</select>
 								</div>
 								<button type="submit" class="btn btn-info">Enregistrer
