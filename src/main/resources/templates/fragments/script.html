@@ -21,39 +21,40 @@
 		
 		
 		
-			$("body").on("click",".deleteuseraction",function() {
+// 			$("body").on("click",".deleteuseraction",function() {
 			
-			name = $(this).data("name");
-			lastname = $(this).data("lastname");
-			idClient= $(this).data("idclient");
+// 			name = $(this).data("name");
+// 			lastname = $(this).data("lastname");
+// 			idClient= $(this).data("idclient");
 			
-			
-			if(name == "undefined"){
-				$("#clientnametodelete").text("");
-			}else{
-				$("#clientnametodelete").text(name);
-			}
-			if(lastname == "undefined"){
-				$("#clientsecondnametodelete").text("");
+// 			alert(idClient);
+// 			if(name == "undefined"){
+// 				$("#clientnametodelete").text("");
+// 			}else{
+// 				$("#clientnametodelete").text(name);
+// 			}
+// 			if(lastname == "undefined"){
+// 				$("#clientsecondnametodelete").text("");
 				
-			}else{
-				$("#clientsecondnametodelete").text(lastname);
-			}
+// 			}else{
+// 				$("#clientsecondnametodelete").text(lastname);
+// 			}
 
-			$("#idclienttodelete").val(idClient);
+// 			$("#idclienttodelete").val(idClient);
 
 			
-		});
+// 		});
 		
 		$("body").on("click",".viewclientaction",function() {
 			
 			name = $(this).data("name");
 			lastname = $(this).data("lastname");
 			birthday= $(this).data("birthday");
-			startday = $(this).data("startday");
+// 			startday = $(this).data("startday");
+			startday = $(this).data("startday").serialize();
 			category = $(this).data("categoryname");
 			subscription = $(this).data("subscriptionname");
-			
+			console.log(startday);
 			var now = new Date(birthday);
 			var day = ("0" + now.getDate()).slice(-2);
 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -87,178 +88,178 @@
 			
 		});
 		
-		$("body").on("click",".edituseraction",function() {
+// 		$("body").on("click",".edituseraction",function() {
 			
-			name = $(this).data("name");
-			lastname = $(this).data("lastname");
-			idClient= $(this).data("idclient");
-			birthday= $(this).data("birthday");
-			startday = $(this).data("startday");
-			category = $(this).data("categoryid");
-			subscription = $(this).data("subscriptionid");
-			var now = new Date(birthday);
-			var day = ("0" + now.getDate()).slice(-2);
-			var month = ("0" + (now.getMonth() + 1)).slice(-2);
-			birthday = now.getFullYear()+"-"+(month)+"-"+(day) ;
+// 			name = $(this).data("name");
+// 			lastname = $(this).data("lastname");
+// 			idClient= $(this).data("idclient");
+// 			birthday= $(this).data("birthday");
+// 			startday = $(this).data("startday");
+// 			category = $(this).data("categoryid");
+// 			subscription = $(this).data("subscriptionid");
+// 			var now = new Date(birthday);
+// 			var day = ("0" + now.getDate()).slice(-2);
+// 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
+// 			birthday = now.getFullYear()+"-"+(month)+"-"+(day) ;
 			
-			var now = new Date(startday);
-			var day = ("0" + now.getDate()).slice(-2);
-			var month = ("0" + (now.getMonth() + 1)).slice(-2);
-			startday = now.getFullYear()+"-"+(month)+"-"+(day) ;
+// 			var now = new Date(startday);
+// 			var day = ("0" + now.getDate()).slice(-2);
+// 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
+// 			startday = now.getFullYear()+"-"+(month)+"-"+(day) ;
 			
-			if(name == "undefined"){
-				$("#nameinput").val("");
-			}else{
-				$("#nameinput").val(name);
-			}
+// 			if(name == "undefined"){
+// 				$("#nameinput").val("");
+// 			}else{
+// 				$("#nameinput").val(name);
+// 			}
 			
-			if(lastname == "undefined"){
-				$("#lastnameinput").val("");
-			}else{
-				$("#lastnameinput").val(lastname);
-			}
-			$("#subscription").val(subscription);
-			$("#category").val(category);
-			$("#idclient").val(idClient);
-			$("#birthday").val(birthday);
-			$("#startday").val(startday);
+// 			if(lastname == "undefined"){
+// 				$("#lastnameinput").val("");
+// 			}else{
+// 				$("#lastnameinput").val(lastname);
+// 			}
+// 			$("#subscription").val(subscription);
+// 			$("#category").val(category);
+// 			$("#idclient").val(idClient);
+// 			$("#birthday").val(birthday);
+// 			$("#startday").val(startday);
 
-		});
+// 		});
 		
-		$("body").on("click",".delete_client [value='Supprimer']",function(e){
+// 		$("body").on("click",".delete_client [value='Supprimer']",function(e){
 			
-			e.preventDefault();
-			data = $(".delete_client").serialize();
+// 			e.preventDefault();
+// 			data = $(".delete_client").serialize();
 			
-			idClient = $("#idclienttodelete").val();
+// 			idClient = $("#idclienttodelete").val();
 			
-			$.post($(".delete_client").attr("action"),data,function(result){
+// 			$.post($(".delete_client").attr("action"),data,function(result){
 
-				var myTable = $('#dataTables-example').DataTable();
+// 				var myTable = $('#dataTables-example').DataTable();
 				
-				if(result){
-					console.log(result)
-					myTable.row( $("[data-idrow='"+idClient+"']")).remove().draw();
-					$("#DeleteClient").modal('toggle');
-				}
+// 				if(result){
+// 					console.log(result)
+// 					myTable.row( $("[data-idrow='"+idClient+"']")).remove().draw();
+// 					$("#DeleteClient").modal('toggle');
+// 				}
 				
-			});
+// 			});
 			
-		});
+// 		});
 		
 		
-		$("body").on("click",".radioTypeClient",function(e){
-			type = $(this).val();  
-			data = $(".refresh_clients").serialize();
-			$.post($(".refresh_clients").attr("action"),data,function(result){
-				console.log(result);
-				var myTable = $('#dataTables-example').DataTable();
-				htmlCode = "";	
-				$('#dataTables-example').DataTable().clear();
-				 for(var i = 0; i < result.length; i++)
-				   {
-					buttons="<button type='button'"+
-								"data-name="+result[i].nom+" data-lastname="+result[i].prenom+" data-idclient="+result[i].idClient+" data-birthday="+result[i].birthDay+" data-startday="+result[i].startDate +
-								" class='btn btn-primary btn viewclientaction' data-toggle='modal' data-target='#ViewClient'"+
-								" style='background-color: #e4c670; border-color: #e4c670;'>"+
-								" <i class='far fa-eye'></i>"+
-							"</button>"+
-							"<button type='button'"+
-								"data-name="+result[i].nom+" data-lastname="+result[i].prenom+" data-idclient="+result[i].idClient+" data-birthday="+result[i].birthDay+" data-startday="+result[i].startDate+
-								" data-categoryid="+result[i].category.idCategory+" data-subscriptionid="+result[i].subscription.idSubscription+
-								" class='btn btn-primary btn edituseraction '"+
-								" data-toggle='modal' data-target='#ModifierClient'"+
-								" style='background-color: #757575; border-color: #757575;'>"+
-								" <i class='fas fa-user-edit'></i>"+
-							"</button>"+
-							"<button type='button'"+
-								"data-name="+result[i].nom+" data-lastname="+result[i].prenom+" data-idclient="+result[i].idClient+
-								" class='btn btn-primary btn deleteuseraction '"+
-								" data-toggle='modal' data-target='#DeleteClient'"+
-								" style='background-color: #944747; border-color: #944747;'>"+
-								" <i class='fas fa-minus-circle'></i>"+
-							"</button>";
+// 		$("body").on("click",".radioTypeClient",function(e){
+// 			type = $(this).val();  
+// 			data = $(".refresh_clients").serialize();
+// 			$.post($(".refresh_clients").attr("action"),data,function(result){
+// 				console.log(result);
+// 				var myTable = $('#dataTables-example').DataTable();
+// 				htmlCode = "";	
+// 				$('#dataTables-example').DataTable().clear();
+// 				 for(var i = 0; i < result.length; i++)
+// 				   {
+// 					buttons="<button type='button'"+
+// 								"data-name="+result[i].nom+" data-lastname="+result[i].prenom+" data-idclient="+result[i].idClient+" data-birthday="+result[i].birthDay+" data-startday="+result[i].startDate +
+// 								" class='btn btn-primary btn viewclientaction' data-toggle='modal' data-target='#ViewClient'"+
+// 								" style='background-color: #e4c670; border-color: #e4c670;'>"+
+// 								" <i class='far fa-eye'></i>"+
+// 							"</button>"+
+// 							"<button type='button'"+
+// 								"data-name="+result[i].nom+" data-lastname="+result[i].prenom+" data-idclient="+result[i].idClient+" data-birthday="+result[i].birthDay+" data-startday="+result[i].startDate+
+// 								" data-categoryid="+result[i].category.idCategory+" data-subscriptionid="+result[i].subscription.idSubscription+
+// 								" class='btn btn-primary btn edituseraction '"+
+// 								" data-toggle='modal' data-target='#ModifierClient'"+
+// 								" style='background-color: #757575; border-color: #757575;'>"+
+// 								" <i class='fas fa-user-edit'></i>"+
+// 							"</button>"+
+// 							"<button type='button'"+
+// 								"data-name="+result[i].nom+" data-lastname="+result[i].prenom+" data-idclient="+result[i].idClient+
+// 								" class='btn btn-primary btn deleteuseraction '"+
+// 								" data-toggle='modal' data-target='#DeleteClient'"+
+// 								" style='background-color: #944747; border-color: #944747;'>"+
+// 								" <i class='fas fa-minus-circle'></i>"+
+// 							"</button>";
 							 
 					 
 					 
 					 
 					 
 					 
-						 myTable.row.add( [
-						             result[i].matricul,
-						             result[i].nom,
-						             result[i].prenom,
-						             buttons,
-						         ] ).draw( false );
+// 						 myTable.row.add( [
+// 						             result[i].matricul,
+// 						             result[i].nom,
+// 						             result[i].prenom,
+// 						             buttons,
+// 						         ] ).draw( false );
 						 
-					 console.log(result[i].category.description);
-				   }
+// 					 console.log(result[i].category.description);
+// 				   }
 				 
 				
 				 
-			});
+// 			});
 			
-		});
-		$("body").on("click","#editButton",function(e) {
-			e.preventDefault();
-			var myTable = $('#dataTables-example').DataTable();
-			idclient = $("#idclient").val();
-			data = $(".edit_clients").serialize();
-			console.log(data);
-			$.post($(".edit_clients").attr("action"),data,function(result){
+// 		});
+// 		$("body").on("click","#editButton",function(e) {
+// 			e.preventDefault();
+// 			var myTable = $('#dataTables-example').DataTable();
+// 			idclient = $("#idclient").val();
+// 			data = $(".edit_clients").serialize();
+// 			console.log(data);
+// 			$.post($(".edit_clients").attr("action"),data,function(result){
 				
 				
 				
-				buttons="<button type='button'"+
-						"data-name="+result.nom+" data-lastname="+result.prenom+" data-idclient="+result.idClient+" data-birthday="+result.birthDay+" data-startday="+result.startDate +
-						" class='btn btn-primary btn viewclientaction' data-toggle='modal' data-target='#ViewClient'"+
-						" style='background-color: #e4c670; border-color: #e4c670;'>"+
-						" <i class='far fa-eye'></i>"+
-					"</button>"+
-					"<button type='button'"+
-						"data-name="+result.nom+" data-lastname="+result.prenom+" data-idclient="+result.idClient+" data-birthday="+result.birthDay+" data-startday="+result.startDate+
-						" data-categoryid="+result.category.idCategory+" data-subscriptionid="+result.subscription.idSubscription+
-						" class='btn btn-primary btn edituseraction '"+
-						" data-toggle='modal' data-target='#ModifierClient'"+
-						" style='background-color: #757575; border-color: #757575;'>"+
-						" <i class='fas fa-user-edit'></i>"+
-					"</button>"+
-					"<button type='button'"+
-						"data-name="+result.nom+" data-lastname="+result.prenom+" data-idclient="+result.idClient+
-						" class='btn btn-primary btn deleteuseraction '"+
-						" data-toggle='modal' data-target='#DeleteClient'"+
-						" style='background-color: #944747; border-color: #944747;'>"+
-						" <i class='fas fa-minus-circle'></i>"+
-					"</button>";
+// 				buttons="<button type='button'"+
+// 						"data-name="+result.nom+" data-lastname="+result.prenom+" data-idclient="+result.idClient+" data-birthday="+result.birthDay+" data-startday="+result.startDate +
+// 						" class='btn btn-primary btn viewclientaction' data-toggle='modal' data-target='#ViewClient'"+
+// 						" style='background-color: #e4c670; border-color: #e4c670;'>"+
+// 						" <i class='far fa-eye'></i>"+
+// 					"</button>"+
+// 					"<button type='button'"+
+// 						"data-name="+result.nom+" data-lastname="+result.prenom+" data-idclient="+result.idClient+" data-birthday="+result.birthDay+" data-startday="+result.startDate+
+// 						" data-categoryid="+result.category.idCategory+" data-subscriptionid="+result.subscription.idSubscription+
+// 						" class='btn btn-primary btn edituseraction '"+
+// 						" data-toggle='modal' data-target='#ModifierClient'"+
+// 						" style='background-color: #757575; border-color: #757575;'>"+
+// 						" <i class='fas fa-user-edit'></i>"+
+// 					"</button>"+
+// 					"<button type='button'"+
+// 						"data-name="+result.nom+" data-lastname="+result.prenom+" data-idclient="+result.idClient+
+// 						" class='btn btn-primary btn deleteuseraction '"+
+// 						" data-toggle='modal' data-target='#DeleteClient'"+
+// 						" style='background-color: #944747; border-color: #944747;'>"+
+// 						" <i class='fas fa-minus-circle'></i>"+
+// 					"</button>";
 				
 				
 				
 				
 				
 				
-					index = myTable.row( $("[data-idrow='"+idClient+"']")).index();
-					console.log(result);
-					myTable.row.add( [
-						             result.matricul,
-						             result.nom,
-						             result.prenom,
-						             buttons,
-						         ] ).draw();
+// 					index = myTable.row( $("[data-idrow='"+idClient+"']")).index();
+// 					console.log(result);
+// 					myTable.row.add( [
+// 						             result.matricul,
+// 						             result.nom,
+// 						             result.prenom,
+// 						             buttons,
+// 						         ] ).draw();
 					
-			        rowCount = myTable.data().length-1,
-			        insertedRow = myTable.row(rowCount).data(),
+// 			        rowCount = myTable.data().length-1,
+// 			        insertedRow = myTable.row(rowCount).data(),
 					
-					myTable.row(index).data(insertedRow);
-					myTable.row(rowCount).remove().draw();
+// 					myTable.row(index).data(insertedRow);
+// 					myTable.row(rowCount).remove().draw();
 					
 
-			    myTable.draw(false);
+// 			    myTable.draw(false);
 				
 
-			});
+// 			});
 			
-			$("#ModifierClient").modal('toggle');
-		});
+// 			$("#ModifierClient").modal('toggle');
+// 		});
 	})
 	
 </script>

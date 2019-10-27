@@ -48,7 +48,7 @@
 							</thead>
 							<tbody id="list_client_body">
 								<th:block th:each="client : ${clients}">
-									<tr th:attr="data-idrow=${client.idClient}">
+									<tr th:attr="data-idrow=${client.idclient}">
 										<td>[[${client.matricul}]]</td>
 										<td>[[${client.nom}]]</td>
 										<td>[[${client.prenom}]]</td>
@@ -57,7 +57,7 @@
 
 
 											<button type="button"
-												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient},data-birthday=${client.birthDay},data-startday=${client.subscription.startDate},data-categoryname=${client.category.name},data-subscriptionname=${client.subscription.name}"
+												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idclient},data-birthday=${client.birthDay},data-startday=${client.subscriptions},data-categoryname=${client.category.name},data-subscriptionname=${client.subscriptions}"
 												class="btn btn-primary btn viewclientaction "
 												data-toggle="modal" data-target="#ViewClient"
 												style="background-color: #e4c670; border-color: #e4c670;">
@@ -65,7 +65,7 @@
 											</button>
 
 											<button type="button"
-												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient},data-birthday=${client.birthDay},data-startday=${client.subscription.startDate},data-categoryid=${client.category.idCategory},data-subscriptionid=${client.subscription.idSubscription}"
+												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idclient},data-birthday=${client.birthDay},data-startday=${client.subscriptions},data-categoryid=${client.category.idCategory},data-subscriptionid=${client.subscriptions}"
 												class="btn btn-primary btn edituseraction "
 												data-toggle="modal" data-target="#ModifierClient"
 												style="background-color: #757575; border-color: #757575;">
@@ -73,7 +73,7 @@
 											</button>
 
 											<button type="button"
-												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idClient}"
+												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idclient}"
 												class="btn btn-primary btn deleteuseraction "
 												data-toggle="modal" data-target="#DeleteClient"
 												style="background-color: #944747; border-color: #944747;">
@@ -145,15 +145,15 @@
 													th:value="${category.idCategory}"></option>
 											</select>
 										</div>
-										<div class="form-group">
-											<label>Select le type d'abonnement</label> <select
-												class="form-control" id="subscription" name="subscription">
-												<option>séléctionner un abonnement</option>
-												<option th:each="subscription : ${subscriptions}"
-													th:text="${subscription.name}"
-													th:value="${subscription.idSubscription}"></option>
-											</select>
-										</div>
+<!-- 										<div class="form-group"> -->
+<!-- 											<label>Select le type d'abonnement</label> <select -->
+<!-- 												class="form-control" id="subscription" name="subscription"> -->
+<!-- 												<option>séléctionner un abonnement</option> -->
+<!-- 												<option th:each="subscription : ${subscriptions}" -->
+<!-- 													th:text="${subscription.subscriptionType.name}" -->
+<!-- 													th:value="${subscription.idSubscription}"></option> -->
+<!-- 											</select> -->
+<!-- 										</div> -->
 										<input type="hidden" id="idclient" name="idclient" />
 									</div>
 								</div>

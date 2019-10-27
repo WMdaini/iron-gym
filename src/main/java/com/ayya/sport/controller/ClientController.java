@@ -79,7 +79,6 @@ public class ClientController {
 		subscription.setClient(client);
 		this.subscriptionRepository.save(subscription);
 
-		subscription.setClient(client);
 //		this.subscriptionRepository.saveAndFlush(subscription);
 		
 		model.addAttribute("isCreated", true);

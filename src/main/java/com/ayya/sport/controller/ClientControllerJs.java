@@ -43,9 +43,9 @@ public class ClientControllerJs {
 			if (type.equals("all")) {
 				clients = this.clientRepository.findAll();
 			} else if (type.equals("active")) {
-//				clients = this.clientRepository.findByIsActiveTrue();
+				clients = this.clientRepository.getActiveClientList();
 			} else {
-//				clients = this.clientRepository.findByIsActiveFalse();
+				clients = this.clientRepository.getInactiveClientList();
 			}
 		}
 
