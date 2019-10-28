@@ -22,7 +22,7 @@
         },
         dataTable_fun: function () {
 
-            $('#dataTables-example').dataTable({
+            $('.dataTable').dataTable({
             	ordering: false
             });
             

@@ -112,7 +112,6 @@ public class Client implements Serializable {
 		this.birthDay = birthDay;
 	}
 
-
 	public void setIdCient(Long idClient) {
 		this.idclient = idClient;
 	}
@@ -126,7 +125,7 @@ public class Client implements Serializable {
 	}
 
 	public Long getIdclient() {
-		return idclient;
+		return this.idclient;
 	}
 
 	public void setIdclient(Long idclient) {
@@ -134,12 +133,17 @@ public class Client implements Serializable {
 	}
 
 	public List<Subscription> getSubscriptions() {
-		return subscriptions;
+		return this.subscriptions;
 	}
 
 	public void setSubscriptions(List<Subscription> subscriptions) {
 		this.subscriptions = subscriptions;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "{\"idclient\":\"" + this.idclient + "\", \"matricul\":\"" + this.matricul + "\", \"nom\":\"" + this.nom + "\", \"prenom\":\"" + this.prenom + "\", \"photo\":\"" + this.photo
+		        + "\", \"birthDay\":\"" + this.birthDay + "\",\"category\":" + this.category + "}";
+	}
 
 }

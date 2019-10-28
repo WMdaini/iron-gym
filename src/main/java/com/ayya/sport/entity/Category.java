@@ -3,7 +3,6 @@ package com.ayya.sport.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +29,7 @@ public class Category implements Serializable {
 	private String description;
 
 	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
-	private List<Client> clients  = new ArrayList<>();
+	private List<Client> clients = new ArrayList<>();
 
 	public Category() {
 		super();
@@ -58,6 +57,11 @@ public class Category implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public String toString() {
+		return "{\"idCategory\":\"" + this.idCategory + "\", \"name\":\"" + this.name + "\", \"description\":\"" + this.description + "\"}";
 	}
 
 }

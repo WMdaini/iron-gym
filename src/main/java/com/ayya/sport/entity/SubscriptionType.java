@@ -15,18 +15,18 @@ public class SubscriptionType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long subscriptionTypeId;
-	
+
 	private String name;
-	
+
 	private int discount;
-	
+
 	private double amount;
-	
+
 	private Integer period;
 
 	@OneToMany(mappedBy = "subscriptionType", fetch = FetchType.EAGER)
 	private List<Subscription> subscriptions;
-	
+
 	public SubscriptionType() {
 		super();
 	}
@@ -40,7 +40,7 @@ public class SubscriptionType {
 	}
 
 	public Long getSubscriptionTypeId() {
-		return subscriptionTypeId;
+		return this.subscriptionTypeId;
 	}
 
 	public void setSubscriptionTypeId(Long subscriptionTypeId) {
@@ -48,7 +48,7 @@ public class SubscriptionType {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -56,7 +56,7 @@ public class SubscriptionType {
 	}
 
 	public int getDiscount() {
-		return discount;
+		return this.discount;
 	}
 
 	public void setDiscount(int discount) {
@@ -64,7 +64,7 @@ public class SubscriptionType {
 	}
 
 	public double getAmount() {
-		return amount;
+		return this.amount;
 	}
 
 	public void setAmount(double amount) {
@@ -72,12 +72,17 @@ public class SubscriptionType {
 	}
 
 	public Integer getPeriod() {
-		return period;
+		return this.period;
 	}
 
 	public void setPeriod(Integer period) {
 		this.period = period;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "{\"subscriptionTypeId\":\"" + this.subscriptionTypeId + "\", \"name\":\"" + this.name + "\", \"discount\":\"" + this.discount + "\", \"amount\":\"" + this.amount + "\", \"period\":\""
+		        + this.period + "\"}";
+	}
+
 }

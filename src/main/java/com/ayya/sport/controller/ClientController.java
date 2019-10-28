@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import com.ayya.sport.repository.CategoryRepository;
 import com.ayya.sport.repository.ClientRepository;
 import com.ayya.sport.repository.SubscriptionRepository;
 import com.ayya.sport.repository.SusbscriptionTypeRepository;
+import com.ayya.sport.utils.JsonUtils;
 
 @Controller
 public class ClientController {
@@ -34,9 +34,12 @@ public class ClientController {
 
 	@Autowired
 	private SubscriptionRepository subscriptionRepository;
-	
+
 	@Autowired
 	private SusbscriptionTypeRepository susbscriptionTypeRepository;
+
+	@Autowired
+	JsonUtils jsonUtils;
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String createClient(Model model) {
@@ -52,41 +55,42 @@ public class ClientController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String createClient(@ModelAttribute(name = "client") Client newClient,@RequestParam Map<String, String> allParams, Model model) throws ParseException {
+	public String createClient(@ModelAttribute(name = "client") Client newClient, @RequestParam Map<String, String> allParams, Model model) throws ParseException {
 		Client client = new Client();
 		client.setNom(newClient.getNom());
 		client.setPrenom(newClient.getPrenom());
 		client.setCategory(newClient.getCategory());
 		client.setBirthDay(newClient.getBirthDay());
 		System.out.println(allParams.get("subscription"));
-		SubscriptionType subscriptionType=susbscriptionTypeRepository.findBySubscriptionTypeId(Long.parseLong(allParams.get("subscription")));
+		SubscriptionType subscriptionType = this.susbscriptionTypeRepository.findBySubscriptionTypeId(Long.parseLong(allParams.get("subscription")));
 		Subscription subscription = new Subscription();
 		subscription.setActive(true);
-		
+
 		Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(allParams.get("startDate"));
 		subscription.setStartDate(startDate);
 		subscription.setSubscriptionType(subscriptionType);
-		
+
 		Calendar myCal = Calendar.getInstance();
-	    myCal.setTime(startDate);   
-		myCal.add(Calendar.MONTH, subscriptionType.getPeriod());   
+		myCal.setTime(startDate);
+		myCal.add(Calendar.MONTH, subscriptionType.getPeriod());
 		Date endDate = myCal.getTime();
 		subscription.setEndDate(endDate);
-		
+
 		client.getSubscriptions().add(subscription);
-		this.clientRepository.saveAndFlush(client);	
-		
+		this.clientRepository.saveAndFlush(client);
+
 		subscription.setClient(client);
 		this.subscriptionRepository.save(subscription);
 
-//		this.subscriptionRepository.saveAndFlush(subscription);
-		
+		// this.subscriptionRepository.saveAndFlush(subscription);
+
 		model.addAttribute("isCreated", true);
 		return createClient(model);
 	}
 
 	@RequestMapping(value = "/list-clients", method = RequestMethod.GET)
 	public String getAllClients(Model model) {
+		model.addAttribute("jsonUtils", this.jsonUtils);
 		model.addAttribute("client", new Client());
 		model.addAttribute("clients", this.clientRepository.findAll());
 		model.addAttribute("categorys", this.categoryRepository.findAll());

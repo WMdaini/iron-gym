@@ -50,11 +50,9 @@
 			name = $(this).data("name");
 			lastname = $(this).data("lastname");
 			birthday= $(this).data("birthday");
-// 			startday = $(this).data("startday");
-			startday = $(this).data("startday").serialize();
+			picture= $(this).data("profilPicture");
+			subscriptions = $(this).data("subscriptions");
 			category = $(this).data("categoryname");
-			subscription = $(this).data("subscriptionname");
-			console.log(startday);
 			var now = new Date(birthday);
 			var day = ("0" + now.getDate()).slice(-2);
 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -64,7 +62,34 @@
 			var day = ("0" + now.getDate()).slice(-2);
 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
 			startday = now.getFullYear()+"-"+(month)+"-"+(day) ;
-			
+			var subscriptionsTable = $('#subscriptionsTable').DataTable();
+			subscriptionsTable.clear().draw();
+
+			for(var i = 0; i < subscriptions.length; i++){
+				status = "";
+				if(subscriptions[i].isActive == 'false')
+				{
+					status = "inactive";
+				}
+				else
+				{
+					status = "active";
+				}
+				var now = new Date(startday);
+	 			var day = ("0" + now.getDate()).slice(-2);
+	 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
+				subscriptionsTable.row.add( [
+									subscriptions[i].client.category.name,
+									subscriptions[i].subscriptionType.period,
+									subscriptions[i].startDate,
+									subscriptions[i].endDate,
+									subscriptions[i].subscriptionType.amount,
+									subscriptions[i].payedAmount,
+									subscriptions[i].restAmount,
+	
+									status
+									] ).draw( false );
+			}
 			if(name == "undefined"){
 				$("#clientname").text("");
 				$("#nameinfo").text("");
@@ -80,11 +105,13 @@
 				$("#clientsecondname").text(lastname);
 				$("#secondnameinfo").text(lastname);
 			}
-
+			profilPictue = "assets/img/default_profil.png";
+			$("#profil_pic").attr("src",profilPictue);
+			$("#clientnamesubscriptions").text(name+" "+lastname);
 			$("#birthdayinfo").text(birthday);
 			$("#startdateinfo").text(startday);
 			$("#categoryinfo").text(category);
-			$("#subscriptioninfo").text(subscription);
+			$("#subscriptioninfo").text(subscriptions);
 			
 		});
 		

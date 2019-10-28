@@ -75,7 +75,7 @@ public class ClientControllerJs {
 			Category caltegory = this.categoryRepository.findByIdCategory(Long.parseLong(allParams.get("category")));
 			client.setCategory(caltegory);
 			Subscription subscription = this.subscriptionRepository.findByIdSubscription(Long.parseLong(allParams.get("subscription")));
-//			client.setSubscription(subscription);
+			// client.setSubscription(subscription);
 		}
 		else {
 			message = "Utilisateur introuvable (Problème systéme , contacter l'administrateur) !";
@@ -85,4 +85,8 @@ public class ClientControllerJs {
 		return client;
 	}
 
+	// public T<T> toJson(T t) {
+	//
+	// return t;
+	// }
 }
