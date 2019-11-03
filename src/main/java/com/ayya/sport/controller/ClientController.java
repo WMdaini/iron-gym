@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ayya.sport.entity.Category;
 import com.ayya.sport.entity.Client;
 import com.ayya.sport.entity.Subscription;
 import com.ayya.sport.entity.SubscriptionType;
@@ -59,7 +60,7 @@ public class ClientController {
 		Client client = new Client();
 		client.setNom(newClient.getNom());
 		client.setPrenom(newClient.getPrenom());
-		client.setCategory(newClient.getCategory());
+		
 		client.setBirthDay(newClient.getBirthDay());
 		System.out.println(allParams.get("subscription"));
 		SubscriptionType subscriptionType = this.susbscriptionTypeRepository.findBySubscriptionTypeId(Long.parseLong(allParams.get("subscription")));
@@ -69,7 +70,8 @@ public class ClientController {
 		Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(allParams.get("startDate"));
 		subscription.setStartDate(startDate);
 		subscription.setSubscriptionType(subscriptionType);
-
+		Category category = categoryRepository.findByIdCategory(Long.parseLong(allParams.get("category")));
+		subscription.setCategory(category);
 		Calendar myCal = Calendar.getInstance();
 		myCal.setTime(startDate);
 		myCal.add(Calendar.MONTH, subscriptionType.getPeriod());

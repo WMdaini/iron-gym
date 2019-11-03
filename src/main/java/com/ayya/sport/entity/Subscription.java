@@ -47,6 +47,10 @@ public class Subscription implements Serializable {
 	@JoinColumn(name = "subscriptionTypeId")
 	private SubscriptionType subscriptionType;
 
+	@ManyToOne()
+	@JoinColumn(name = "idCategory")
+	private Category category;
+	
 	public Subscription() {
 		super();
 	}
@@ -99,13 +103,23 @@ public class Subscription implements Serializable {
 		this.isActive = isActive;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
 		return "{\"idSubscription\":\"" + this.idSubscription + "\", \"startDate\":\"" + this.startDate + "\", \"endDate\":\"" + this.endDate + "\", \"isActive\":\"" + this.isActive
 		        + "\", \"client\":" + this.client
 		        + ", \"subscriptionType\":" + this.subscriptionType + ""
 		        + ",\"payedAmount\":\"" + this.payedAmount + "\""
-		        + ",\"restAmount\":\"" + this.restAmount + "\"}";
+		        + ",\"restAmount\":\"" + this.restAmount + "\""
+		        + ",\"category\":" + this.category + ""
+		        + "}";
 	}
 
 	public double getPayedAmount() {

@@ -11,8 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name ="CATEGORY")
 public class Category implements Serializable {
 	/**
 	 *
@@ -29,7 +31,7 @@ public class Category implements Serializable {
 	private String description;
 
 	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
-	private List<Client> clients = new ArrayList<>();
+	private List<Subscription> subscriptions = new ArrayList<>();
 
 	public Category() {
 		super();

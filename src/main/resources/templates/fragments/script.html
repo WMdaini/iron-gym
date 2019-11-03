@@ -46,13 +46,12 @@
 // 		});
 		
 		$("body").on("click",".viewclientaction",function() {
-			
+
 			name = $(this).data("name");
 			lastname = $(this).data("lastname");
 			birthday= $(this).data("birthday");
 			picture= $(this).data("profilPicture");
 			subscriptions = $(this).data("subscriptions");
-			category = $(this).data("categoryname");
 			var now = new Date(birthday);
 			var day = ("0" + now.getDate()).slice(-2);
 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -62,24 +61,25 @@
 			var day = ("0" + now.getDate()).slice(-2);
 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
 			startday = now.getFullYear()+"-"+(month)+"-"+(day) ;
+			
 			var subscriptionsTable = $('#subscriptionsTable').DataTable();
 			subscriptionsTable.clear().draw();
-
+			
 			for(var i = 0; i < subscriptions.length; i++){
 				status = "";
 				if(subscriptions[i].isActive == 'false')
 				{
-					status = "inactive";
+					status = "<input type='checkbox' disabled>";
 				}
 				else
 				{
-					status = "active";
+					status =  "<input type='checkbox' checked disabled>";
 				}
 				var now = new Date(startday);
 	 			var day = ("0" + now.getDate()).slice(-2);
 	 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
 				subscriptionsTable.row.add( [
-									subscriptions[i].client.category.name,
+									subscriptions[i].category.name,
 									subscriptions[i].subscriptionType.period,
 									subscriptions[i].startDate,
 									subscriptions[i].endDate,
@@ -90,6 +90,7 @@
 									status
 									] ).draw( false );
 			}
+	
 			if(name == "undefined"){
 				$("#clientname").text("");
 				$("#nameinfo").text("");

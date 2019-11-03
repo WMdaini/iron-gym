@@ -47,21 +47,16 @@ public class Client implements Serializable {
 	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
 	private List<Subscription> subscriptions = new ArrayList<Subscription>();
 
-	@ManyToOne()
-	@JoinColumn(name = "idCategory")
-	private Category category;
-
 	public Client() {
 		super();
 	}
 
-	public Client(String nom, String prenom, File photo, Date birthDay, Category category) {
+	public Client(String nom, String prenom, File photo, Date birthDay) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.photo = photo;
 		this.birthDay = birthDay;
-		this.category = category;
 	}
 
 	public Long getIdClient() {
@@ -94,14 +89,6 @@ public class Client implements Serializable {
 
 	public void setPhoto(File photo) {
 		this.photo = photo;
-	}
-
-	public Category getCategory() {
-		return this.category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
 	}
 
 	public Date getBirthDay() {
@@ -143,7 +130,7 @@ public class Client implements Serializable {
 	@Override
 	public String toString() {
 		return "{\"idclient\":\"" + this.idclient + "\", \"matricul\":\"" + this.matricul + "\", \"nom\":\"" + this.nom + "\", \"prenom\":\"" + this.prenom + "\", \"photo\":\"" + this.photo
-		        + "\", \"birthDay\":\"" + this.birthDay + "\",\"category\":" + this.category + "}";
+		        + "\", \"birthDay\":\"" + this.birthDay + "\"}";
 	}
 
 }

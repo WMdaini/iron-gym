@@ -57,7 +57,7 @@
 
 
 											<button type="button"
-												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idclient},data-birthday=${client.birthDay},data-categoryname=${client.category.name},data-subscriptions=${jsonUtils.listToJson(client.subscriptions)},data-profilPicture=${client.photo}"
+												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idclient},data-birthday=${client.birthDay},data-subscriptions=${jsonUtils.listToJson(client.subscriptions)},data-profilPicture=${client.photo}"
 												class="btn btn-primary btn viewclientaction "
 												data-toggle="modal" data-target="#ViewClient"
 												style="background-color: #e4c670; border-color: #e4c670;">
@@ -65,7 +65,7 @@
 											</button>
 
 											<button type="button"
-												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idclient},data-birthday=${client.birthDay},data-startday=${client.subscriptions},data-categoryid=${client.category.idCategory},data-subscriptionid=${client.subscriptions}"
+												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idclient},data-birthday=${client.birthDay},data-startday=${client.subscriptions},data-subscriptionid=${client.subscriptions}"
 												class="btn btn-primary btn edituseraction "
 												data-toggle="modal" data-target="#ModifierClient"
 												style="background-color: #757575; border-color: #757575;">
@@ -218,24 +218,6 @@
 											<label id="birthdayinfo"></label>
 										</p>
 									</div>
-									<div class="form-group">
-										<label>Date de début :</label>
-										<p class="help-block">
-											<label id="startdateinfo"></label>
-										</p>
-									</div>
-									<div class="form-group">
-										<label>Categorie :</label>
-										<p class="help-block">
-											<label id="categoryinfo"></label>
-										</p>
-									</div>
-									<div class="form-group">
-										<label>Type d'abonnement :</label>
-										<p class="help-block">
-											<label id="subscriptioninfo"></label>
-										</p>
-									</div>
 									</div>
 									<div class="col-md-3 col-sm-3 col-xs-3">
 										<img id="profil_pic" style="width:200px ;height:200px;">
@@ -315,9 +297,9 @@
 							<th>Date de début</th>
 							<th>Date de fin</th>
 							<th>Montant</th>
-							<th>Montant payer</th>
+							<th>Montant payé</th>
 							<th>Montant retant</th>
-							<th>Status</th>
+							<th>Active</th>
 						</tr>
 						</thead>
 						<tbody>
