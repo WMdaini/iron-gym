@@ -65,7 +65,7 @@
 											</button>
 
 											<button type="button"
-												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idclient},data-birthday=${client.birthDay},data-startday=${client.subscriptions},data-subscriptionid=${client.subscriptions}"
+												th:attr="data-name=${client.nom},data-lastname=${client.prenom},data-idclient=${client.idclient},data-birthday=${client.birthDay},data-subscriptions=${client.subscriptions}"
 												class="btn btn-primary btn edituseraction "
 												data-toggle="modal" data-target="#ModifierClient"
 												style="background-color: #757575; border-color: #757575;">
@@ -125,26 +125,20 @@
 											<p class="help-block"></p>
 										</div>
 										<div class="form-group">
-											<label>Enter la date de début</label> <input
-												class="form-control" type="date" id="startday"
-												name="startDate" />
-											<p class="help-block">jj/mm/aaaa</p>
-										</div>
-										<div class="form-group">
 											<label>Enter la date de naissance</label> <input
 												class="form-control" type="date" id="birthday"
 												name="birthday" />
 											<p class="help-block">jj/mm/aaaa</p>
 										</div>
-										<div class="form-group">
-											<label>Select category</label> <select class="form-control"
-												id="category" name="category">
-												<option>séléctionner une catégorie</option>
-												<option th:each="category : ${categorys}"
-													th:text="${category.name}"
-													th:value="${category.idCategory}"></option>
-											</select>
-										</div>
+<!-- 										<div class="form-group"> -->
+<!-- 											<label>Select category</label> <select class="form-control" -->
+<!-- 												id="category" name="category"> -->
+<!-- 												<option>séléctionner une catégorie</option> -->
+<!-- 												<option th:each="category : ${categorys}" -->
+<!-- 													th:text="${category.name}" -->
+<!-- 													th:value="${category.idCategory}"></option> -->
+<!-- 											</select> -->
+<!-- 										</div> -->
 <!-- 										<div class="form-group"> -->
 <!-- 											<label>Select le type d'abonnement</label> <select -->
 <!-- 												class="form-control" id="subscription" name="subscription"> -->
@@ -155,6 +149,7 @@
 <!-- 											</select> -->
 <!-- 										</div> -->
 										<input type="hidden" id="idclient" name="idclient" />
+										<input type="hidden" id="subscriptions" name="subscriptions" />
 									</div>
 								</div>
 							</div>

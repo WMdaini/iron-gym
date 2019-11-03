@@ -57,11 +57,6 @@
 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
 			birthday = now.getFullYear()+"-"+(month)+"-"+(day) ;
 			
-			var now = new Date(startday);
-			var day = ("0" + now.getDate()).slice(-2);
-			var month = ("0" + (now.getMonth() + 1)).slice(-2);
-			startday = now.getFullYear()+"-"+(month)+"-"+(day) ;
-			
 			var subscriptionsTable = $('#subscriptionsTable').DataTable();
 			subscriptionsTable.clear().draw();
 			
@@ -75,9 +70,7 @@
 				{
 					status =  "<input type='checkbox' checked disabled>";
 				}
-				var now = new Date(startday);
-	 			var day = ("0" + now.getDate()).slice(-2);
-	 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
+				
 				subscriptionsTable.row.add( [
 									subscriptions[i].category.name,
 									subscriptions[i].subscriptionType.period,
@@ -110,49 +103,43 @@
 			$("#profil_pic").attr("src",profilPictue);
 			$("#clientnamesubscriptions").text(name+" "+lastname);
 			$("#birthdayinfo").text(birthday);
-			$("#startdateinfo").text(startday);
-			$("#categoryinfo").text(category);
 			$("#subscriptioninfo").text(subscriptions);
 			
 		});
 		
-// 		$("body").on("click",".edituseraction",function() {
+		$("body").on("click",".edituseraction",function() {
 			
-// 			name = $(this).data("name");
-// 			lastname = $(this).data("lastname");
-// 			idClient= $(this).data("idclient");
-// 			birthday= $(this).data("birthday");
-// 			startday = $(this).data("startday");
-// 			category = $(this).data("categoryid");
-// 			subscription = $(this).data("subscriptionid");
-// 			var now = new Date(birthday);
-// 			var day = ("0" + now.getDate()).slice(-2);
-// 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
-// 			birthday = now.getFullYear()+"-"+(month)+"-"+(day) ;
+			name = $(this).data("name");
+			lastname = $(this).data("lastname");
+			idClient= $(this).data("idclient");
+			birthday= $(this).data("birthday");
+			
+			subscriptions = $(this).data("subscriptions");
+			var now = new Date(birthday);
+			var day = ("0" + now.getDate()).slice(-2);
+			var month = ("0" + (now.getMonth() + 1)).slice(-2);
+			birthday = now.getFullYear()+"-"+(month)+"-"+(day) ;
 			
 // 			var now = new Date(startday);
 // 			var day = ("0" + now.getDate()).slice(-2);
 // 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
 // 			startday = now.getFullYear()+"-"+(month)+"-"+(day) ;
 			
-// 			if(name == "undefined"){
-// 				$("#nameinput").val("");
-// 			}else{
-// 				$("#nameinput").val(name);
-// 			}
+			if(name == "undefined"){
+				$("#nameinput").val("");
+			}else{
+				$("#nameinput").val(name);
+			}
 			
-// 			if(lastname == "undefined"){
-// 				$("#lastnameinput").val("");
-// 			}else{
-// 				$("#lastnameinput").val(lastname);
-// 			}
-// 			$("#subscription").val(subscription);
-// 			$("#category").val(category);
-// 			$("#idclient").val(idClient);
-// 			$("#birthday").val(birthday);
-// 			$("#startday").val(startday);
-
-// 		});
+			if(lastname == "undefined"){
+				$("#lastnameinput").val("");
+			}else{
+				$("#lastnameinput").val(lastname);
+			}
+			$("#idclient").val(idClient);
+			$("#subscriptions").val(subscriptions);
+			$("#birthday").val(birthday);
+		});
 		
 // 		$("body").on("click",".delete_client [value='Supprimer']",function(e){
 			
@@ -228,12 +215,12 @@
 // 			});
 			
 // 		});
-// 		$("body").on("click","#editButton",function(e) {
-// 			e.preventDefault();
+		$("body").on("click","#editButton",function(e) {
+			e.preventDefault();
 // 			var myTable = $('#dataTables-example').DataTable();
 // 			idclient = $("#idclient").val();
-// 			data = $(".edit_clients").serialize();
-// 			console.log(data);
+			data = $(".edit_clients").serialize();
+			console.log(data.subscriptions);
 // 			$.post($(".edit_clients").attr("action"),data,function(result){
 				
 				
@@ -287,7 +274,7 @@
 // 			});
 			
 // 			$("#ModifierClient").modal('toggle');
-// 		});
+		});
 	})
 	
 </script>
