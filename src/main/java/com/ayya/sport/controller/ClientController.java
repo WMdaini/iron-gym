@@ -2,115 +2,140 @@ package com.ayya.sport.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ayya.sport.entity.Category;
 import com.ayya.sport.entity.Client;
 import com.ayya.sport.entity.Subscription;
-import com.ayya.sport.entity.SubscriptionType;
 import com.ayya.sport.repository.CategoryRepository;
 import com.ayya.sport.repository.ClientRepository;
 import com.ayya.sport.repository.SubscriptionRepository;
-import com.ayya.sport.repository.SusbscriptionTypeRepository;
-import com.ayya.sport.utils.JsonUtils;
 
-@Controller
+@RestController
+@RequestMapping(value = "/client")
+@CrossOrigin("*")
 public class ClientController {
 
 	@Autowired
-	private ClientRepository clientRepository;
+	ClientRepository clientRepository;
 
 	@Autowired
-	private CategoryRepository categoryRepository;
+	CategoryRepository categoryRepository;
 
 	@Autowired
-	private SubscriptionRepository subscriptionRepository;
+	SubscriptionRepository subscriptionRepository;
 
-	@Autowired
-	private SusbscriptionTypeRepository susbscriptionTypeRepository;
-
-	@Autowired
-	JsonUtils jsonUtils;
-
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String createClient(Model model) {
-		model.addAttribute("client", new Client());
-		model.addAttribute("categorys", this.categoryRepository.findAll());
-		model.addAttribute("subscriptions", this.susbscriptionTypeRepository.findAll());
-		return "/pages/createUser";
-	}
-
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String home(Model model) {
-		return "home";
-	}
-
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String createClient(@ModelAttribute(name = "client") Client newClient, @RequestParam Map<String, String> allParams, Model model) throws ParseException {
-		Client client = new Client();
-		client.setNom(newClient.getNom());
-		client.setPrenom(newClient.getPrenom());
-		
-		client.setBirthDay(newClient.getBirthDay());
-		System.out.println(allParams.get("subscription"));
-		SubscriptionType subscriptionType = this.susbscriptionTypeRepository.findBySubscriptionTypeId(Long.parseLong(allParams.get("subscription")));
-		Subscription subscription = new Subscription();
-		subscription.setActive(true);
-
-		Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(allParams.get("startDate"));
-		subscription.setStartDate(startDate);
-		subscription.setSubscriptionType(subscriptionType);
-		Category category = categoryRepository.findByIdCategory(Long.parseLong(allParams.get("category")));
-		subscription.setCategory(category);
-		Calendar myCal = Calendar.getInstance();
-		myCal.setTime(startDate);
-		myCal.add(Calendar.MONTH, subscriptionType.getPeriod());
-		Date endDate = myCal.getTime();
-		subscription.setEndDate(endDate);
-
-		client.getSubscriptions().add(subscription);
-		this.clientRepository.saveAndFlush(client);
-
-		subscription.setClient(client);
-		this.subscriptionRepository.save(subscription);
-
-		// this.subscriptionRepository.saveAndFlush(subscription);
-
-		model.addAttribute("isCreated", true);
-		return createClient(model);
-	}
-
+	@PersistenceContext
+	EntityManager em;
+	
 	@RequestMapping(value = "/list-clients", method = RequestMethod.GET)
-	public String getAllClients(Model model) {
-		model.addAttribute("jsonUtils", this.jsonUtils);
-		model.addAttribute("client", new Client());
-		model.addAttribute("clients", this.clientRepository.findAll());
-		model.addAttribute("categorys", this.categoryRepository.findAll());
-		model.addAttribute("subscriptions", this.subscriptionRepository.findAll());
-		model.addAttribute("showFilter", "true");
-
-		return "/pages/clientsList";
+	public List<Client> getAllClients() {
+		return clientRepository.findAll();
 	}
-	@RequestMapping(value = "/generate-clients", method = RequestMethod.GET)
-	public boolean generateClients() {
-		for(int i = 0 ; i<=1000;i++) {
-			Client client = new Client();
-			client.setBirthDay(new Date());
-			client.setMatricul(""+i);
-			client.setNom("client"+i);
-			client.setPrenom("prenom"+i);
-			clientRepository.saveAndFlush(client);
+	
+	
+//	@RequestMapping(value = "/clients-filter/{status}/{category}/{gender}/{startdate/{enddate}/", method = RequestMethod.GET)
+//	public List<Client> getFiltredClients(@PathVariable("status") String status,@PathVariable("gender")String gender
+//			,@PathVariable("startdate") Date startdate,@PathVariable("enddate") Date edndate,@PathVariable("category") String category) {
+//		System.out.println(category);
+//		return clientRepository.findAll();
+//	}
+//	
+	@RequestMapping(value = "/clients-filter/{status}", method = RequestMethod.GET)
+	public List<Client> getFiltredClients(@PathVariable("status")String status) {
+		String query = "select c.* from ";
+		String tables = "client c ";
+		String conditions= "where 1=1 ";
+		if(status!=null && !status.equals("Client status") && !status.equals("tous")) {
+			tables+=",subscription s  ";
+			conditions += "and c.id_client = s.idclient ";
+			if(status.equals("active")) {
+				conditions += "and s.is_active = true ";
+			}else {
+				conditions += "and s.is_active = false ";
+			}
 		}
-		return true;
+			query += tables+conditions;
+			Query myQuery = em.createNativeQuery(query);
+			List<Client> clients = myQuery.getResultList();
+		return clients;
 	}
+	
+	
+//	@RequestMapping(value = "/refresh_clients", method = RequestMethod.GET)
+//	public List<Client> refreshClients(@RequestParam Map<String, String> allParams) {
+//		String type = allParams.get("typeClients");
+//		List<Client> clients = new ArrayList<Client>();
+//		type = "all";
+//		if (type != null) {
+//			if (type.equals("all")) {
+//				clients = this.clientRepository.findAll();
+//			} else if (type.equals("active")) {
+//				clients = this.clientRepository.getActiveClientList();
+//			} else {
+//				clients = this.clientRepository.getInactiveClientList();
+//		}
+//		}
+//
+//		System.out.println(clients);
+//
+//		return clients;
+//	}
+//	
+//	
+//	
+//	
+//	@RequestMapping(value = "/delete-clients", method = RequestMethod.POST)
+//	public Boolean deleteClient(@RequestParam Map<String, String> allParams) {
+//		this.clientRepository.delete(this.clientRepository.findByIdclient(Long.parseLong(allParams.get("idclienttodelete"))));
+//		return true;
+//	}
+//
+//	@RequestMapping(value = "/edit-clients", method = RequestMethod.POST)
+//	public Client editClients(@RequestParam Map<String, String> allParams, Model model) throws ParseException {
+//		String message = "Modifié";
+//		Client client = this.clientRepository.findByIdclient(Long.parseLong(allParams.get("idclient")));
+//		if (client != null) {
+//			client.setNom(allParams.get("nom"));
+//			client.setPrenom(allParams.get("prenom"));
+//			if (allParams.get("birthday") != null && !allParams.get("birthday").equals("")) {
+//				Date birthday = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH).parse(allParams.get("startDate"));
+//				client.setBirthDay(birthday);
+//			}
+//
+//			Category caltegory = this.categoryRepository.findByIdCategory(Long.parseLong(allParams.get("category")));
+//			client.setCategory(caltegory);
+//			Subscription subscription = this.subscriptionRepository.findByIdSubscription(Long.parseLong(allParams.get("subscription")));
+//			// client.setSubscription(subscription);
+//		}
+//		else {
+//			message = "Utilisateur introuvable (Problème systéme , contacter l'administrateur) !";
+//		}
+//		System.out.println(allParams.get("idclient"));
+//
+//		return client;
+//	}
+//
+//	// public T<T> toJson(T t) {
+//	//
+//	// return t;
+//	// }
 }
