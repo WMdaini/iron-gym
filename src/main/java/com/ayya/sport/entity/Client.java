@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -41,10 +43,12 @@ public class Client implements Serializable {
 
 	private File photo;
 
-	@DateTimeFormat(iso = ISO.DATE)
+	private String gender;
+	
+	@Temporal(TemporalType.DATE)
 	private Date birthDay;
 
-	@OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
 	private List<Subscription> subscriptions = new ArrayList<Subscription>();
 
 	public Client() {
@@ -119,9 +123,9 @@ public class Client implements Serializable {
 		this.idclient = idclient;
 	}
 
-	public List<Subscription> getSubscriptions() {
-		return this.subscriptions;
-	}
+//	public List<Subscription> getSubscriptions() {
+//		return this.subscriptions;
+//	}
 
 	public void setSubscriptions(List<Subscription> subscriptions) {
 		this.subscriptions = subscriptions;
@@ -131,6 +135,14 @@ public class Client implements Serializable {
 	public String toString() {
 		return "{\"idclient\":\"" + this.idclient + "\", \"matricul\":\"" + this.matricul + "\", \"nom\":\"" + this.nom + "\", \"prenom\":\"" + this.prenom + "\", \"photo\":\"" + this.photo
 		        + "\", \"birthDay\":\"" + this.birthDay + "\"}";
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 }

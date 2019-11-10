@@ -101,5 +101,16 @@ public class ClientController {
 
 		return "/pages/clientsList";
 	}
-
+	@RequestMapping(value = "/generate-clients", method = RequestMethod.GET)
+	public boolean generateClients() {
+		for(int i = 0 ; i<=1000;i++) {
+			Client client = new Client();
+			client.setBirthDay(new Date());
+			client.setMatricul(""+i);
+			client.setNom("client"+i);
+			client.setPrenom("prenom"+i);
+			clientRepository.saveAndFlush(client);
+		}
+		return true;
+	}
 }
