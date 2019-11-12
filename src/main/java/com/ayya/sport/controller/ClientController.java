@@ -59,22 +59,39 @@ public class ClientController {
 //		return clientRepository.findAll();
 //	}
 //	
-	@RequestMapping(value = "/clients-filter/{status}", method = RequestMethod.GET)
-	public List<Client> getFiltredClients(@PathVariable("status")String status) {
-		String query = "select c.* from ";
-		String tables = "client c ";
+	@RequestMapping(value = "/clients-filter/{status}/{gender}", method = RequestMethod.PUT)
+	public List<Client> getFiltredClients(@RequestBody Category category,@PathVariable("status")String status,@PathVariable("gender")String gender) {
+		System.out.println(category);
+		String query = "select DISTINCT c from ";
+		String tables = "Client c ";
 		String conditions= "where 1=1 ";
-		if(status!=null && !status.equals("Client status") && !status.equals("tous")) {
-			tables+=",subscription s  ";
-			conditions += "and c.id_client = s.idclient ";
+		if(status!=null && !status.equals("undefined") && !status.equals("") && !status.equals("tous")) {
+			tables+=",Subscription s  ";
+			conditions += "and c.idclient = s.client ";
 			if(status.equals("active")) {
-				conditions += "and s.is_active = true ";
+				conditions += "and s.isActive = true ";
 			}else {
-				conditions += "and s.is_active = false ";
+				conditions += "and s.isActive = false ";
 			}
 		}
+		
+		if(gender!=null && !gender.equals("undefined") && !gender.equals("") && !gender.equals("tous")) {
+			if(gender.equals("male")) {
+				conditions += "and c.gender = 'male' ";
+			}else {
+				conditions += "and c.gender = 'female' ";
+			}
+		}
+		
+		if(category!=null && category.getIdCategory() != null) {
+			if(!tables.contains("Subscription")) {
+				tables+=",Subscription s  ";
+			}
+			conditions += "and c.idclient = s.client and s.category ="+category.getIdCategory()+" ";
+			
+		}
 			query += tables+conditions;
-			Query myQuery = em.createNativeQuery(query);
+			Query myQuery = em.createQuery(query);
 			List<Client> clients = myQuery.getResultList();
 		return clients;
 	}
